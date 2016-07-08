@@ -28,14 +28,14 @@ passport.use(new JwtStrategy(JwtOpts, function(jwt_payload, done) {
     console.log( "JWT PAYLOAD" + util.inspect(jwt_payload));
 
     // User.findOne({id: jwt_payload.sub}, function(err, user) {
-    User.findOne({username: jwt_payload._doc.username}, function(err, user) {
-
+    // User.findOne({username: jwt_payload._doc.username}, function(err, user) {
+      client.query("SELECT * FROM users WHERE username=$1", [jwt_payload._doc.username], function(err, result) {
         if (err) {
             return done(err, false);
         }
 
-        if (user) {
-            console.log("user is " + user.username)
+        if (result) {
+            console.log("user is " + result.username)
             done(null, user);
         } else {
             done(null, false);
@@ -44,21 +44,25 @@ passport.use(new JwtStrategy(JwtOpts, function(jwt_payload, done) {
     });
 }));
 
-passport.use( new LocalStrategy ( function( username, password, done ) {
-    pg.connect(db, function(err, client, done) {
-    if (err) {
-      done();
-      console.log(err);
-    }
-    var query = client.query("SELECT * FROM users WHERE username=jwt_payload.doc.username");
-    query.on("row", function (row, result) {
-      result.addRow(row);
+passport.use( new LocalStrategy (
+  function( username, password, done ) {
+    client.query("SELECT * FROM users WHERE username=$1", [username], function( err, dbUser ) {
+      if (err) { return done(err); }
+      if (!dbUser) {
+        // If we want to send back flash messages with a description of the error
+        // We would need to install express-flash for this to work
+
+        // return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false);
+      }
+
+      if (!dbUser.authenticate(password)) {
+        // return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false);
+      }
+
+      return done(null, dbUser);
     });
-    query.on("end", function(result) {
-      console.log(JSON.stringify(result.rows, null, "   "));
-      client.end();
-    });
-   })
   }));
 
 module.exports = passport;
