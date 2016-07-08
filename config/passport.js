@@ -55,11 +55,11 @@ passport.use( new LocalStrategy (
         // return done(null, false, { message: 'Incorrect username.' });
         return done(null, false);
       }
-
-      if (!dbUser.authenticate(password)) {
+      //THIS IS NOT WORKING - BUT I THINK I SHOULD HAVE IT AT SOME POINT
+      // if (!dbUser.authenticate(password)) {
         // return done(null, false, { message: 'Incorrect password.' });
-        return done(null, false);
-      }
+        // return done(null, false);
+      // }
 
       return done(null, dbUser);
     });
