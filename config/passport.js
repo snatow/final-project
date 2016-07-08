@@ -60,8 +60,9 @@ passport.use( new LocalStrategy (
         // return done(null, false, { message: 'Incorrect password.' });
         // return done(null, false);
       // }
-
-      return done(null, dbUser);
+      console.log("DBUSER");
+      console.log(dbUser.rows[0].username);
+      return done(null, dbUser.rows[0]);
     });
   }));
 
