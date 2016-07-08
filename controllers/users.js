@@ -16,7 +16,7 @@ client.connect();
 // ------------------------------
 
 // TESTING
-// router.get('/', function(req, res) {
+// router.get('/testing', function(req, res) {
 // 	console.log('hi');
 // 	res.send('bye');
 // })
@@ -52,8 +52,14 @@ router.get('/test', function(req, res) {
 
 // INDEX
 router.get('/', function(req, res, next) {
-	User.find(function(users) {
-		res.json(users);
+	// User.find(function(users) {
+	client.query("SELECT * FROM users", function(err, users){
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(users.rows);
+			res.send(users.rows);
+		}
 	});
 }),
 
