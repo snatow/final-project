@@ -1,10 +1,10 @@
 {
   "name": "template",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,21 @@
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-jwt": "^2.0.0",
-    "passport-local": "^1.0.0"
-  }
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^6.0.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.23.4",
+    "sequelize-cli": "^2.4.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snatow/final-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/snatow/final-project/issues"
+  },
+  "homepage": "https://github.com/snatow/final-project#readme",
+  "description": ""
 }

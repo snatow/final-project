@@ -4,6 +4,10 @@ var LocalStrategy = require('passport-local').Strategy;
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 var JwtOpts = {};
+var pg = require('pg');
+var db = process.env.DATABASE_URI || "postgres://localhost/social_app_dev";
+var client = new pg.Client(db);
+client.connect();
 
 var util = require("util");
 JwtOpts.jwtFromRequest = function(req) {
@@ -40,26 +44,21 @@ passport.use(new JwtStrategy(JwtOpts, function(jwt_payload, done) {
     });
 }));
 
-passport.use( new LocalStrategy(
-  function( username, password, done ) {
-    User.findOne({ username: username }, function( err, dbUser ) {
-      if (err) { return done(err); }
-      if (!dbUser) {
-        // If we want to send back flash messages with a description of the error
-        // We would need to install express-flash for this to work
-
-        // return done(null, false, { message: 'Incorrect username.' });
-        return done(null, false);
-      }
-
-      if (!dbUser.authenticate(password)) {
-        // return done(null, false, { message: 'Incorrect password.' });
-        return done(null, false);
-      }
-
-      return done(null, dbUser);
+passport.use( new LocalStrategy ( function( username, password, done ) {
+    pg.connect(db, function(err, client, done) {
+    if (err) {
+      done();
+      console.log(err);
+    }
+    var query = client.query("SELECT * FROM users WHERE username=jwt_payload.doc.username");
+    query.on("row", function (row, result) {
+      result.addRow(row);
     });
-  })
-);
+    query.on("end", function(result) {
+      console.log(JSON.stringify(result.rows, null, "   "));
+      client.end();
+    });
+   })
+  }));
 
 module.exports = passport;

@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 var morgan = require('morgan');
-var mongoose = require('mongoose');
+var pg = require('pg');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
@@ -26,8 +26,9 @@ app.use(cookieParser());
 
 
 // DATABASE
-var db = process.env.MONGODB_URI || "mongodb://localhost/sexy_auth_dev";
-mongoose.connect(db);
+var db = process.env.DATABASE_URI || "postgres://localhost/social_app_dev";
+var client = new pg.Client(db);
+client.connect();
 
 
 // CONTROLLERS

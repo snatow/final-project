@@ -1,25 +1,9 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
-var crypto = require('crypto');
+var pg = require('pg');
+var db = process.env.DATABASE_URI || "postgres://localhost/social_app_dev";
 
-var userSchema = mongoose.Schema({
-  username: { type: String, unique: true, required: true },
-  email: { type: String, unique: true, required: true },
-  password: { type: String }
-});
+var client = new pg.Client(db);
+client.connect();
 
-userSchema.pre('save', function(next) {
-	if(this.isModified('password')) {
-		this.password = bcrypt.hashSync(this.password, 10);
-	}
-	next();
-});
-
-userSchema.methods.authenticate = function(passwordTry) {
-	return bcrypt.compareSync(passwordTry, this.password);
-};
-
-var User = mongoose.model('User', userSchema);
-
-module.exports = User;
+console.log("in users")
+var query = client.query("CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR not null, email VARCHAR not null, password VARCHAR not null)");
+query.on('end', function() { client.end();});
