@@ -56,12 +56,13 @@ router.get('/test', function(req, res) {
 // INDEX
 router.get('/', function(req, res, next) {
 	// User.find(function(users) {
-	client.query("SELECT * FROM users", function(err, users){
+	// client.query("SELECT * FROM users", function(err, users){
+	User.findAll().then(function(users, err) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(users.rows);
-			res.send(users.rows);
+			console.log(users);
+			res.send(users);
 		}
 	});
 }),
