@@ -6,6 +6,8 @@ var db = process.env.DATABASE_URI || "postgres://localhost/social_app_dev";
 var connection = new Sequelize(db);
 var User = require('../models/users.js');
 var passport = require('../config/passport.js');
+var Project = require('../models/projects.js');
+// var Comment = require('../models/comments.js');
 
 // var client = new pg.Client(db);
 // client.connect();
@@ -19,6 +21,12 @@ var passport = require('../config/passport.js');
 // router.get('/testing', function(req, res) {
 // 	console.log('hi');
 // 	res.send('bye');
+// })
+
+// //INDEX - playing around with not doing a SPA
+// router.get("/", function(req, res) {
+// 	var user = false;
+// 	res.render("index.ejs", {user: false});
 // })
 
 
@@ -57,7 +65,7 @@ router.get('/test', function(req, res) {
 router.get('/', function(req, res, next) {
 	// User.find(function(users) {
 	// client.query("SELECT * FROM users", function(err, users){
-	User.findAll().then(function(users, err) {
+	User.findAll({include: [Project]}).then(function(users, err) {
 		if (err) {
 			console.log(err);
 		} else {

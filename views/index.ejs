@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js" charset="utf-8"></script>
+  <title>DevBook</title>
+</head>
+<body>
+<% if (user) { %>
+  <% include ../views/partials/logout.ejs %>
+<% } else { %>
+  <% include ../views/partials/login.ejs %>
+<% } %>
+<h2>DevBook</h2>
+
+
+</body>
+</html>
