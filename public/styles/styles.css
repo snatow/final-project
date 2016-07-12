@@ -34,3 +34,12 @@ h4 {
 header {
   background-color: white;
 }
+
+.project-preview {
+  width: 400px;
+  display: inline-block;
+}
+
+img {
+  max-width: 200px;
+}

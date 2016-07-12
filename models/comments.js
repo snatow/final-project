@@ -5,6 +5,7 @@ var connection = new Sequelize(db);
 var bcrypt = require('bcryptjs');
 var crypto = require('crypto');
 //Related Models
+// var User = require('./users.js').model;
 var User = require('./users.js');
 var Project = require('./projects.js');
 

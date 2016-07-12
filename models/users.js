@@ -40,14 +40,34 @@ var User = connection.define('users', {
 
 
 //Relationships
-User.hasMany(Project);
-Project.belongsTo(User);
+User.hasMany(Project.model);
+Project.model.belongsTo(User);
 // User.hasMany(Comment);
 
-connection.sync().then(function () {
-  // Table created
-  console.log("now we have a user table");
-});
+Project.table.then(function() {
+    connection.sync().then(function () {
+    // Table created
+    console.log("now we have a user table");
+  })
+})
 
 module.exports = User;
+
+// var table = function() {
+//   connection.sync().then(function () {
+//     // Table created
+//     console.log("now we have a user table");
+//   })
+// }
+
+// module.exports = {
+//   model: User,
+//   table: function() {
+//     connection.sync().then(function() {
+//       console.log("now we have a user table");
+//     })
+//   }
+// };
+// exports.table = table;
+// exports.model = User;
 

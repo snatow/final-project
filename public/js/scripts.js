@@ -24,6 +24,7 @@ $(document).ready(function() {
 	  $signupLink.hide();
 	  $welcome.hide();
 	  $logoutLink.show();
+	  getProjectsProtected();
 	} else {
 		console.log('not logged in');
 		$loginForm.show();
@@ -31,6 +32,7 @@ $(document).ready(function() {
 		$welcome.show();
 		$signupForm.hide();
 		$logoutLink.hide();
+		getProjects();
 	}
 
 	// Event listener and handler to login
@@ -110,7 +112,71 @@ $(document).ready(function() {
 		$welcome.hide();
 		$signupForm.show();
 	});
+
+
 });
+
+// -----------------------------------------------------------------------------
+// RENDERING FUNCTIONS
+// -----------------------------------------------------------------------------
+
+//This rendering function just shows the project previews
+//If the user is not logged in, this version will render
+var renderProjects = function(data) {
+
+	var $homelink = $("#home-link");
+	$homelink.hide();
+
+	var $contain = $("#contain");
+	$contain.empty();
+
+	for (var i = 0; i < data.length; i++) {
+		var $project = $("<div class='project-preview' data-attribute='" + data[i].id + "'><h3>" + data[i].title + "</h3><img src='" + data[i].image + "'></div>");
+		$contain.append($project);
+	}
+}
+
+
+// This rendering function includes the event listeners necessary to see the project show pages
+// If the user is logged in, this version will render
+var renderProjectsProtected = function(data) {
+
+	var $homelink = $("#home-link");
+	$homelink.hide();
+
+	var $contain = $("#contain");
+	$contain.empty();
+
+	for (var i = 0; i < data.length; i++) {
+		var $project = $("<div class='project-preview' data-attribute='" + data[i].id + "'><h3>" + data[i].title + "</h3></div>");
+		var $img = $("<img>");
+		$img.attr("src", data[i].image);
+		$img.attr("class", "preview-image");
+		$img.attr("data-attribute", data[i].id);
+		$project.append($img);
+
+		// class='preview-image' src='" + data[i].image + "'
+		$project.click(function() {
+			console.log("clicked");
+			var target = $(event.target)
+			console.log(target.attr("data-attribute"))
+			getProject(target.attr("data-attribute"));
+		})
+		$contain.append($project);
+	}
+}
+
+var renderProject = function(data) {
+	var $contain = $("#contain");
+	$contain.empty();
+
+	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></div>");
+	$contain.append($project);
+
+	var $homelink = $("#home-link");
+	$homelink.show();
+}
+
 
 // -----------------------------------------------------------------------------
 // AJAX FUNCTIONS
@@ -124,3 +190,43 @@ var testAuth = function() {
 		console.log(data);
 	});	
 };
+
+//This AJAX call will be used when the user IS NOT logged in
+var getProjects = function() {
+	$.ajax({
+		url: "/projects",
+		method: "GET"
+	}).done(function(data) {
+		console.log(data);
+		renderProjects(data);
+	})
+};
+
+//This AJAX call will be used when the user IS not logged in
+var getProjectsProtected = function() {
+	$.ajax({
+		url: "/projects",
+		method: "GET"
+	}).done(function(data) {
+		console.log(data);
+		renderProjectsProtected(data);
+	})
+};
+
+var getProject = function(project_id) {
+	// var user_id = Cookies.get("userId");
+	$.ajax({
+		url: "/projects/" + project_id,
+		method: "GET",
+	}).done(function(data) {
+		console.log(data);
+		renderProject(data);
+	})
+}
+
+
+
+
+
+
+

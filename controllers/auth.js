@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('../config/passport.js');
-var User = require('../models/users.js');
+var User = require('../models/users.js').model;
+// var User = require('../models/users.js');
 var jwt = require('jsonwebtoken');
 
 // Initialize passport
