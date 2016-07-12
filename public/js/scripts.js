@@ -6,8 +6,7 @@ $(document).ready(function() {
 	var $signupLink = $("#signup-link");
 	var $signupForm = $("#signup-form");
 
-	//check if the user's logged in
-	// in reality check if token is still valid
+	//check if the user's logged in - in reality check if token is still valid
 	if(Cookies.get("jwt_token")){
 		console.log('logged in');
 	  $loginForm.hide();
@@ -32,12 +31,15 @@ $(document).ready(function() {
 	    	password: $loginForm.find("[name=password]").val()
 	    }
 	  }).success(function(data){
-	    // console.log(data);
+	    console.log(data);
 	    if(data.token){
 	      Cookies.set("jwt_token", data.token);
+	      Cookies.set("userId", data.userId);
 	     		$signupForm.hide();
 					$signupLink.hide();
 					$loginForm.hide();
+					$logoutLink.show();
+					// location.reload();
 	    } else {
 	      console.log("ERROR LOGGING IN");
 	    }

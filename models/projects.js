@@ -22,16 +22,9 @@ var Project = connection.define('projects', {
     type: Sequelize.TEXT,
     allowNull: false
   }
-// }, {
-//   classMethods: {
-//     associate: function(models) {
-//       Project.belongsTo(User);
-//       Project.hasMany(Comment);
-//     }
-//   }
 });
 
-//Relationships
+//Relationships - pretty sure I don't need this here
 // Project.belongsTo(User);
 // User.hasMany(Project);
 // Project.hasMany(Comment);
