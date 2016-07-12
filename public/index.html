@@ -2,37 +2,54 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Welcome to the JUNGle~</title>
+    <title>DevBook</title>
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js" charset="utf-8"></script>
     <!-- Cookies lib -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js" charset="utf-8"></script>
     <script src="js/scripts.js" charset="utf-8"></script>
   </head>
   <body>
+    <header>
+      
+      <a id="logout-link" style="display: none" href="#">Log Out</a>
+
+      <div class="header" id="logo">
+        <img src="../images/logo_placeholder.png">
+      </div>
+      
+      <div class="header" id="login-contain">
+        <form action="#" id="login-form">
+          <h4>Login</h4>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password">
+          <input type="submit" value="LOG IN" class="btn">
+        </form>
+      </div>
+
+    </header>
+    <p id="welcome">Our app is great, you should join.</p>
     <a id="signup-link" href="/signup">Sign Up</a>
-    <a id="logout-link" style="display: none" href="#">Log Out</a>
 
 
-    <form action="#" id="login-form">
-      <h5>Login</h5>
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password">
-      <input type="submit" value="LOG IN">
-    </form>
+    
 
     <form action="/users" id="signup-form">
-      <h5>Signup</h5>
+      <h4>Signup</h4>
       <label for="username">Username</label>
       <input type="text" id="username" name="username">
       <label for="email">Email</label>
       <input type="text" id="email" name="email">
       <label for="password">Password</label>
       <input type="password" id="password" name="password">
-      <input type="Submit" value="SIGN UP">
+      <input type="Submit" value="SIGN UP" class="btn">
     </form>
 
+    <div class="contain">
+      
+    </div>
 
   </body>
 </html>

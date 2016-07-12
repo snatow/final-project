@@ -73,6 +73,66 @@ router.get('/', function(req, res, next) {
 			res.send(users);
 		}
 	});
-}),
+});
+
+// EDIT PROJECT FOR USER
+router.get("/:user_id/projects/:project_id/edit", function(req, res) {
+	Project.findById(req.params.project_id).then(function(project, err) {
+		if (err) {
+			console.log(err);
+		} else if (project.users.user_id === req.params.user_id) {
+			res.send(project);
+		} else {
+			console.log("you do not have the correct permissions");
+		}
+	})
+})
+
+// UPDATE PROJECT FOR USER
+router.put("/project/:project_id", function(req, res) {
+	Project.findById(req.params.project_id).then(function(project, err) {
+		if (err) {
+			console.log(err);
+		} else {
+			project.update({
+				title: req.body.title,
+				image: req.body.image,
+				description: req.body.description, 
+				github: req.body.github,
+				url: req.body.url
+			}).then(function(project) {
+				res.send(project);
+			})
+		}
+	})
+})
+
+// CREATE PROJECT FOR USER
+router.post("/:user_id/new-project", function(req, res) {
+	var newProject = Project.create({
+		title: req.body.title,
+		image: req.body.image,
+		description: req.body.description, 
+		github: req.body.github,
+		url: req.body.url,
+		userId: req.params.user_id
+	})
+	res.send(newProject);
+})
+
+// DELETE PROJECT FOR USER
+router.delete("//:user_id/projects/:project_id/delete", function(req, res) {
+	Project.findById(req.params.project_id).then(function(project, err) {
+		if (err) {
+			console.log(err);
+		} else if (project.users.user_id === req.params.user_id) {
+			project.destroy();
+			res.send(true);
+		} else {
+			console.log("you do not have the correct permissions");
+		}
+	})
+})
+
 
 module.exports = router;

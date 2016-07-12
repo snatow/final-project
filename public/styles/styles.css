@@ -1,0 +1,36 @@
+body {
+  background-color: lightgrey;
+}
+
+#logout-link {
+  float: right;
+}
+
+.header {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.logo {
+  width: 150px;
+}
+
+#login-contain {
+  width: 700px;
+  float: right;
+}
+
+h4 {
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.btn {
+  background-color: #000080;
+  color: white;
+  border: 1px solid black;
+}
+
+header {
+  background-color: white;
+}

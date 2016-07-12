@@ -1,21 +1,34 @@
 $(document).ready(function() {
 
+	// -----------------------------------------------------------------------------
+	// DOM ELEMENT VARIABLES
+	// -----------------------------------------------------------------------------
+
 	// Auth related jQuery objects
 	var $loginForm = $("#login-form");
 	var $logoutLink = $("#logout-link");
 	var $signupLink = $("#signup-link");
 	var $signupForm = $("#signup-form");
 
+	// Elements that appear when user is not logged in
+	var $welcome = $("#welcome");
+
+	// -----------------------------------------------------------------------------
+	// FUNCTIONS TO HANDLE USER EXPERIENCE FOR AUTH
+	// -----------------------------------------------------------------------------
+
 	//check if the user's logged in - in reality check if token is still valid
 	if(Cookies.get("jwt_token")){
 		console.log('logged in');
 	  $loginForm.hide();
 	  $signupLink.hide();
+	  $welcome.hide();
 	  $logoutLink.show();
 	} else {
 		console.log('not logged in');
 		$loginForm.show();
 		$signupLink.show();
+		$welcome.show();
 		$signupForm.hide();
 		$logoutLink.hide();
 	}
@@ -94,9 +107,14 @@ $(document).ready(function() {
 		$loginForm.hide();
 		$logoutLink.hide();
 		$signupLink.hide();
+		$welcome.hide();
 		$signupForm.show();
 	});
 });
+
+// -----------------------------------------------------------------------------
+// AJAX FUNCTIONS
+// -----------------------------------------------------------------------------
 
 var testAuth = function() {
 	$.ajax({

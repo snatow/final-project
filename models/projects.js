@@ -21,6 +21,14 @@ var Project = connection.define('projects', {
   description: {
     type: Sequelize.TEXT,
     allowNull: false
+  }, 
+  github: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
+  url: {
+    type: Sequelize.TEXT,
+    allowNull: true
   }
 });
 
