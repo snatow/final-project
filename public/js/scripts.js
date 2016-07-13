@@ -169,32 +169,6 @@ $(document).ready(function() {
 		renderNewProject(user_id);
 	})
 
-	//Event listener and hanlder to create new project
-	$("#new-project-form").click(function(e) {
-		e.preventDefault();
-		console.log("submitting new project");
-		var user_id = Cookies.get("userId");
-		$.ajax({
-			url: '/users' + user_id + '/new-project',
-			method: 'POST',
-			data: {
-				title: $("#new-project-form").find("[name=title]").val(),
-				image: $("#new-project-form").find("[name=image]").val(),
-				description: $("#new-project-form").find("[name=description]").val(),
-				github: $("#new-project-form").find("[name=github]").val(),
-				url: $("#new-project-form").find("[name=url]").val()
-			}
-		}).done(function(data) {
-			renderProfile(data);
-		});
-	})
-
-	//Event listener and hanlder to render data to edit a project
-	// $("#edit-project-link").click(function(e) {
-	// 	e.preventDefault();
-	// 	// var user_id = Cookies.get("userId");
-	// 	getProjectForEdit(project_id);
-	// })
 
 });
 
@@ -370,7 +344,27 @@ var renderNewProject = function(data) {
 	$form.append($addButton);
 
 	$contain.append($form);
-}
+
+	var $newProjectForm = $("#new-project-form")
+	$$newProjectForm.submit(function(e) {
+		e.preventDefault();
+		console.log("submitting new project");
+		var user_id = Cookies.get("userId");
+		$.ajax({
+			url: '/users/' + user_id + '/new-project',
+			method: 'POST',
+			data: {
+				title: $newProjectForm.find("[name=title]").val(),
+				image: $newProjectForm.find("[name=image]").val(),
+				description: $newProjectForm.find("[name=description]").val(),
+				github: $newProjectForm.find("[name=github]").val(),
+				url: $newProjectForm.find("[name=url]").val()
+			}
+		}).done(function(data) {
+			renderProject(data);
+		});
+	})
+};
 
 var renderEditProject = function(data) {
 	console.log(data);
@@ -382,7 +376,7 @@ var renderEditProject = function(data) {
 
 	var user_id = Cookies.get("userId");
 
-	var $form = $("<form action='/users/" + user_id + "/projects/" + data.id + "/edit' id='edit-project-form'><h2>Edit Project</h2></form>");
+	var $form = $("<form action='/users/" + user_id + "/projects/" + data.id + "/edit' id='edit-project-form' data-attribute='" + data.id + "'><h2>Edit Project</h2></form>");
 	var $title = $("<label for='title'>Title: </label><input type='text' id='title' name='title' value='" + data.title + "'></br>");
 	$form.append($title);
 	var $image = $("<label for='image'>Image URL: </label><input type='text' id='image' name='image' value='" + data.image + "'></br>");
@@ -397,7 +391,28 @@ var renderEditProject = function(data) {
 	$form.append($addButton);
 
 	$contain.append($form);
-}
+
+	var $editProjectForm = $("#edit-project-form")
+	$editProjectForm.submit(function(e) {
+		e.preventDefault();
+		console.log("editing project");
+		var target = $(event.target)
+		console.log(target.attr("data-attribute"))
+		$.ajax({
+			url: '/users/project/' + target.attr("data-attribute"),
+			method: 'PUT',
+			data: {
+				title: $editProjectForm.find("[name=title]").val(),
+				image: $editProjectForm.find("[name=image]").val(),
+				description: $editProjectForm.find("[name=description]").val(),
+				github: $editProjectForm.find("[name=github]").val(),
+				url: $editProjectForm.find("[name=url]").val()
+			}
+		}).done(function(data) {
+			renderProject(data);
+		});
+	})
+};
 
 
 // -----------------------------------------------------------------------------
