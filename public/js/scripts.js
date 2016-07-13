@@ -155,6 +155,9 @@ $(document).ready(function() {
 	//Event listener and handler to return to index
 	$homeLink.click(function(e) {
 		e.preventDefault();
+		$profileEditLink.hide();
+		$newProjectLink.hide();
+		$profileLink.show();
 		getProjectsProtected();
 	})
 
@@ -272,7 +275,7 @@ var renderProject = function(data) {
 	var $contain = $("#contain");
 	$contain.empty();
 
-	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></div>");
+	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></br></div>");
 	var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a>");
 	$editProjectLink.click(function() {
 			console.log("clicked");
