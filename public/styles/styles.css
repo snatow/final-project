@@ -4,6 +4,11 @@ body {
 
 #logout-link {
   float: right;
+  margin-left: 2%;
+}
+
+#profile-link {
+  float: right;
 }
 
 .header {
@@ -40,6 +45,11 @@ header {
   display: inline-block;
 }
 
-img {
+.preview-image {
   max-width: 200px;
+}
+
+footer {
+  background-color: white;
+  margin-top: 40px;
 }

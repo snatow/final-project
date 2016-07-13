@@ -9,12 +9,15 @@ $(document).ready(function() {
 	var $logoutLink = $("#logout-link");
 	var $signupLink = $("#signup-link");
 	var $signupForm = $("#signup-form");
+	var $profileEditForm = $("#profile-edit-form");
 
 	// Elements that appear when user is not logged in
 	var $welcome = $("#welcome");
 
 	// Elements for navigation
-	var $homelink = $("#home-link");
+	var $homeLink = $("#home-link");
+	var $profileLink = $("#profile-link");
+	var $profileEditLink = $("#profile-edit-link");
 
 	// -----------------------------------------------------------------------------
 	// FUNCTIONS TO HANDLE USER EXPERIENCE FOR AUTH
@@ -27,6 +30,7 @@ $(document).ready(function() {
 	  $signupLink.hide();
 	  $welcome.hide();
 	  $logoutLink.show();
+	  $profileLink.show();
 	  getProjectsProtected();
 	} else {
 		console.log('not logged in');
@@ -35,6 +39,8 @@ $(document).ready(function() {
 		$welcome.show();
 		$signupForm.hide();
 		$logoutLink.hide();
+		$profileLink.hide();
+		$profileEditLink.hide();
 		getProjects();
 	}
 
@@ -58,6 +64,7 @@ $(document).ready(function() {
 					$loginForm.hide();
 					$logoutLink.show();
 					$welcome.hide();
+					$profileLink.show();
 					getProjectsProtected();
 					// location.reload();
 	    } else {
@@ -108,7 +115,7 @@ $(document).ready(function() {
 		$loginForm.show();
 	}
 
-	// Event listener and handler to signup
+	// Event listener and handler to signup link
 	$signupLink.click(function(e) {
 		e.preventDefault();
 		$loginForm.hide();
@@ -118,16 +125,55 @@ $(document).ready(function() {
 		$signupForm.show();
 	});
 
+	//Event listener and hanlder to edit profile form
+	$("#profile-edit-form").submit(function(e) {
+		// e.stopImmediatePropagation();
+		// e.preventDefault();
+		console.log("edit form submit");
+		var user_id = Cookies.get("userId");
+		console.log(user_id);
+		return false;
+		// $.ajax({
+		// 	url: '/users' + user_id,
+		// 	method: 'PUT',
+		// 	data: {
+		// 		username: $profileEditForm.find("[name=username]").val(),
+		// 		email: $profileEditForm.find("[name=email]").val()
+		// 	}
+		// }).done(function(data) {
+		// 		renderProfile(data);
+		// 	}
+		// });
+	})
+
 
 	// -----------------------------------------------------------------------------
 	// EVENT HANDLERS FOR USER NAVIGATION
 	// -----------------------------------------------------------------------------
 
-	//Event listener and handler to returnn to index
-	$homelink.click(function(e) {
+	//Event listener and handler to return to index
+	$homeLink.click(function(e) {
 		e.preventDefault();
 		getProjectsProtected();
 	})
+
+	//Event listener and handler to show the user profile
+	$profileLink.click(function(e) {
+		e.preventDefault();
+		$profileEditLink.show();
+		var user_id = Cookies.get("userId");
+		console.log(user_id);
+		getProfile(user_id);
+	})
+
+	//Event listener and handler to edit the user profile
+	$profileEditLink.click(function(e) {
+		e.preventDefault();
+		console.log("edit profile clicked");
+		var user_id = Cookies.get("userId");
+		getProfileForEdit(user_id);
+	})
+
 });
 
 // -----------------------------------------------------------------------------
@@ -138,14 +184,19 @@ $(document).ready(function() {
 //If the user is not logged in, this version will render
 var renderProjects = function(data) {
 
-	var $homelink = $("#home-link");
-	$homelink.hide();
+	var $homeLink = $("#home-link");
+	$homeLink.hide();
 
 	var $contain = $("#contain");
 	$contain.empty();
 
 	for (var i = 0; i < data.length; i++) {
-		var $project = $("<div class='project-preview' data-attribute='" + data[i].id + "'><h3>" + data[i].title + "</h3><img src='" + data[i].image + "'></div>");
+		var $project = $("<div class='project-preview' data-attribute='" + data[i].id + "'><h3>" + data[i].title + "</h3></div>");
+		var $img = $("<img>");
+		$img.attr("src", data[i].image);
+		$img.attr("class", "preview-image");
+		$img.attr("data-attribute", data[i].id);
+		$project.append($img);
 		$contain.append($project);
 	}
 }
@@ -155,8 +206,8 @@ var renderProjects = function(data) {
 // If the user is logged in, this version will render
 var renderProjectsProtected = function(data) {
 
-	var $homelink = $("#home-link");
-	$homelink.hide();
+	var $homeLink = $("#home-link");
+	$homeLink.hide();
 
 	var $contain = $("#contain");
 	$contain.empty();
@@ -187,8 +238,57 @@ var renderProject = function(data) {
 	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></div>");
 	$contain.append($project);
 
-	var $homelink = $("#home-link");
-	$homelink.show();
+	var $homeLink = $("#home-link");
+	$homeLink.show();
+}
+
+var renderProfile = function(data) {
+	var $contain = $("#contain");
+	$contain.empty();
+
+	var $profile = $("<h2>" + data.profile.username + "'s Projects</h2>");
+	$contain.append($profile);
+
+	for (var i = 0; i < data.projects.length; i++) {
+		var $project = $("<div class='project-preview' data-attribute='" + data.projects[i].id + "'><h3>" + data.projects[i].title + "</h3></div>");
+		var $img = $("<img>");
+		$img.attr("src", data.projects[i].image);
+		$img.attr("class", "preview-image");
+		$img.attr("data-attribute", data.projects[i].id);
+		$project.append($img);
+
+		$project.click(function() {
+			console.log("clicked");
+			var target = $(event.target)
+			console.log(target.attr("data-attribute"))
+			getProject(target.attr("data-attribute"));
+		})
+		$contain.append($project);
+	}
+
+	var $homeLink = $("#home-link");
+	$homeLink.show();
+
+	var $profileLink = $("#profile-link");
+	$profileLink.hide();
+}
+
+var renderEditProfile = function(data) {
+	var $contain = $("#contain");
+	$contain.empty();
+
+	var $homeLink = $("#home-link");
+	$homeLink.show();
+
+	var $form = $("<form action='/users/" + data.profile.id + "' id='profile-edit-form'></form>");
+	var $username = $("<label for='username'>Username</label><input type='text' id='username-edit' name='username' value='" + data.profile.username + "'>");
+	$form.append($username);
+	var $email = $("<label for='email'>Email</label><input type='text' id='email-edit' name='email' value='" + data.profile.email + "'>");
+	$form.append($email);
+	var $editButton = $("<input type='Submit' value='EDIT' class='btn'>");
+	$form.append($editButton);
+
+	$contain.append($form);
 }
 
 
@@ -238,8 +338,25 @@ var getProject = function(project_id) {
 	})
 }
 
+var getProfile = function(user_id) {
+	$.ajax({
+		url: "/users/" + user_id,
+		method: "GET",
+	}).done(function(data) {
+		console.log(data);
+		renderProfile(data);
+	})
+}
 
-
+var getProfileForEdit = function(user_id) {
+	$.ajax({
+		url: "/users/" + user_id,
+		method: "GET",
+	}).done(function(data) {
+		console.log(data);
+		renderEditProfile(data);
+	})
+}
 
 
 

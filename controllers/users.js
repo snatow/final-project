@@ -50,7 +50,7 @@ router.post('/', function(req, res) {
 // -----------------------------------------------
 // ROUTES THAT REQUIRE AUTHENTICATION w/ JWT BELOW
 // -----------------------------------------------
-// router.use(passport.authenticate('jwt', { session: false }));
+router.use(passport.authenticate('jwt', { session: false }));
 
 // TESTING
 // router.get('/', function(req, res) {
@@ -111,6 +111,20 @@ router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 			console.log("you do not have the correct permissions");
 			res.send("you cannot do this");
 		}
+	})
+})
+
+//UPDATE USER PROFILE
+router.put("/:user_id", function(req, res) {
+	console.log("username");
+	console.log(req.body.username);
+	User.findById(req.params.user_id).then(function(user) {
+		user.update({
+			username: req.body.username,
+			email: req.body.email
+		}). then(function(user) {
+			res.send(user);
+		})
 	})
 })
 
