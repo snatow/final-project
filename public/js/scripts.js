@@ -13,6 +13,9 @@ $(document).ready(function() {
 	// Elements that appear when user is not logged in
 	var $welcome = $("#welcome");
 
+	// Elements for navigation
+	var $homelink = $("#home-link");
+
 	// -----------------------------------------------------------------------------
 	// FUNCTIONS TO HANDLE USER EXPERIENCE FOR AUTH
 	// -----------------------------------------------------------------------------
@@ -54,6 +57,8 @@ $(document).ready(function() {
 					$signupLink.hide();
 					$loginForm.hide();
 					$logoutLink.show();
+					$welcome.hide();
+					getProjectsProtected();
 					// location.reload();
 	    } else {
 	      console.log("ERROR LOGGING IN");
@@ -114,6 +119,15 @@ $(document).ready(function() {
 	});
 
 
+	// -----------------------------------------------------------------------------
+	// EVENT HANDLERS FOR USER NAVIGATION
+	// -----------------------------------------------------------------------------
+
+	//Event listener and handler to returnn to index
+	$homelink.click(function(e) {
+		e.preventDefault();
+		getProjectsProtected();
+	})
 });
 
 // -----------------------------------------------------------------------------

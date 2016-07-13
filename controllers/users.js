@@ -124,7 +124,7 @@ router.post("/:user_id/new-project", function(req, res) {
 })
 
 // DELETE PROJECT FOR USER
-router.delete("//:user_id/projects/:project_id/delete", function(req, res) {
+router.delete("/:user_id/projects/:project_id/delete", function(req, res) {
 	Project.findById(req.params.project_id).then(function(project, err) {
 		if (err) {
 			console.log(err);
