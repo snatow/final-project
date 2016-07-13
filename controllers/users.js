@@ -4,10 +4,9 @@ var router = express.Router();
 var Sequelize = require("sequelize");
 var db = process.env.DATABASE_URI || "postgres://localhost/social_app_dev";
 var connection = new Sequelize(db);
-// var User = require('../models/users.js').model;
 var User = require('../models/users.js');
 var passport = require('../config/passport.js');
-var Project = require('../models/projects.js');
+var Project = require('../models/projects.js').model;
 // var Comment = require('../models/comments.js');
 
 // var client = new pg.Client(db);
@@ -51,7 +50,7 @@ router.post('/', function(req, res) {
 // -----------------------------------------------
 // ROUTES THAT REQUIRE AUTHENTICATION w/ JWT BELOW
 // -----------------------------------------------
-router.use(passport.authenticate('jwt', { session: false }));
+// router.use(passport.authenticate('jwt', { session: false }));
 
 // TESTING
 // router.get('/', function(req, res) {
@@ -79,12 +78,15 @@ router.get('/', function(req, res, next) {
 // EDIT PROJECT FOR USER
 router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 	Project.findById(req.params.project_id).then(function(project, err) {
+		// console.log(project.dataValues.userId);
+		// console.log(req.params.user_id);
 		if (err) {
 			console.log(err);
-		} else if (project.users.user_id === req.params.user_id) {
+		} else if (project.dataValues.userId == req.params.user_id) {
 			res.send(project);
 		} else {
 			console.log("you do not have the correct permissions");
+			res.send("you cannot do this");
 		}
 	})
 })

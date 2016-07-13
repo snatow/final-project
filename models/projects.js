@@ -5,9 +5,6 @@ var connection = new Sequelize(db);
 var bcrypt = require('bcryptjs');
 var crypto = require('crypto');
 //Related Models
-// var userTable = require('./users.js');
-// console.log("this is usertable")
-// console.log(userTable);
 // var Comment = require('./comments.js');
 
 // console.log("in users")
@@ -39,13 +36,6 @@ var Project = connection.define('projects', {
 // User.hasMany(Project);
 // Project.hasMany(Comment);
 
-// //Create Table
-// userTable.table().then(function() {
-//   connection.sync().then(function () {
-//     // Table created
-//     console.log("now we have a project table");
-//   });
-// });
 
 var table = connection.sync().then(function() {
   //Table created

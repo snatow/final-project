@@ -74,23 +74,20 @@ sequelize.authenticate().then(function(err) {
   }
 })
 
-var User = require("./models/users.js");
-console.log(User);
-
 //=========================
 // CONTROLLERS
 //=========================
 // var testController = require('./controllers/test.js');
 // app.use('/test', testController);
 
-// var usersController = require('./controllers/users.js');
-// app.use('/users', usersController);
+var usersController = require('./controllers/users.js');
+app.use('/users', usersController);
 
-// var authController = require('./controllers/auth.js')
-// app.use('/auth', authController);
+var authController = require('./controllers/auth.js')
+app.use('/auth', authController);
 
-// var projectsController = require('./controllers/projects.js');
-// app.use('/projects', projectsController);
+var projectsController = require('./controllers/projects.js');
+app.use('/projects', projectsController);
 
 // var commentsController = require('./controllers/comments.js');
 // app.use('/comments', commentsController);

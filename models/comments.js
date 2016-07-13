@@ -7,7 +7,7 @@ var crypto = require('crypto');
 //Related Models
 // var User = require('./users.js').model;
 var User = require('./users.js');
-var Project = require('./projects.js');
+var Project = require('./projects.js').model;
 
 // console.log("in users")
 var Comment = connection.define('comments', {
