@@ -232,14 +232,16 @@ var renderProject = function(data) {
 	$contain.empty();
 
 	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></br></div>");
-	var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a>");
-	$editProjectLink.click(function() {
-			console.log("clicked");
-			var target = $(event.target)
-			console.log(target.attr("data-attribute"))
-			getProjectForEdit(target.attr("data-attribute"));
-		})
-	$project.append($editProjectLink);
+	if (Cookies.get("userId") == data.userId) {
+		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a>");
+		$editProjectLink.click(function() {
+				console.log("clicked");
+				var target = $(event.target)
+				console.log(target.attr("data-attribute"))
+				getProjectForEdit(target.attr("data-attribute"));
+			})
+		$project.append($editProjectLink);
+	}
 	$contain.append($project);
 
 	var $homeLink = $("#home-link");
@@ -457,6 +459,7 @@ var getProject = function(project_id) {
 		method: "GET",
 	}).done(function(data) {
 		console.log(data);
+		console.log("project's user id: " + data.userId);
 		renderProject(data);
 	})
 }
