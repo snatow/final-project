@@ -123,7 +123,19 @@ router.put("/:user_id", function(req, res) {
 			username: req.body.username,
 			email: req.body.email
 		}). then(function(user) {
-			res.send(user);
+			Project.findAll({where: {userId: user.id}}).then(function(projects) {
+				// console.log(projects.length);
+				var userProjects = [];
+				for (var i = 0; i < projects.length; i++) {
+					userProjects.push(projects[i].dataValues);
+				}
+				// console.log(userProjects);
+				var userInfo = {}
+				userInfo["profile"] = user.dataValues;
+				userInfo["projects"] = userProjects;
+				// console.log(userInfo);
+				res.send(userInfo);
+			})
 		})
 	})
 })

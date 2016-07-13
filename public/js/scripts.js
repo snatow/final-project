@@ -128,25 +128,7 @@ $(document).ready(function() {
 	});
 
 	//Event listener and hanlder to edit profile form
-	$("#profile-edit-form").submit(function(e) {
-		// e.stopImmediatePropagation();
-		// e.preventDefault();
-		console.log("edit form submit");
-		var user_id = Cookies.get("userId");
-		console.log(user_id);
-		return false;
-		$.ajax({
-			url: '/users' + user_id,
-			method: 'PUT',
-			data: {
-				username: $profileEditForm.find("[name=username]").val(),
-				email: $profileEditForm.find("[name=email]").val()
-			}
-		}).done(function(data) {
-			renderProfile(data);
-		});
-	})
-
+	
 
 	// -----------------------------------------------------------------------------
 	// EVENT HANDLERS FOR USER NAVIGATION AND FORMS NOT RELATED TO USER AUTH
@@ -338,7 +320,31 @@ var renderEditProfile = function(data) {
 	var $editButton = $("<input type='Submit' value='EDIT' class='btn'>");
 	$form.append($editButton);
 
+	var profileEditFormSubmit = function() {
+		var $profileEditForm = $("#profile-edit-form")
+		$profileEditForm.submit(function(e) {
+			e.stopImmediatePropagation();
+			e.preventDefault();
+			console.log("edit form submit");
+			var user_id = Cookies.get("userId");
+			console.log(user_id);
+			// return false;
+			$.ajax({
+				url: '/users/' + user_id,
+				method: 'PUT',
+				data: {
+					username: $profileEditForm.find("[name=username]").val(),
+					email: $profileEditForm.find("[name=email]").val()
+				}
+			}).done(function(data) {
+				console.log(data);
+				renderProfile(data);
+			});
+		})
+	};
+
 	$contain.append($form);
+	profileEditFormSubmit();
 }
 
 var renderNewProject = function(data) {
