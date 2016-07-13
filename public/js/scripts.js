@@ -204,6 +204,13 @@ $(document).ready(function() {
 		});
 	})
 
+	//Event listener and hanlder to render data to edit a project
+	// $("#edit-project-link").click(function(e) {
+	// 	e.preventDefault();
+	// 	// var user_id = Cookies.get("userId");
+	// 	getProjectForEdit(project_id);
+	// })
+
 });
 
 // -----------------------------------------------------------------------------
@@ -266,6 +273,14 @@ var renderProject = function(data) {
 	$contain.empty();
 
 	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></div>");
+	var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a>");
+	$editProjectLink.click(function() {
+			console.log("clicked");
+			var target = $(event.target)
+			console.log(target.attr("data-attribute"))
+			getProjectForEdit(target.attr("data-attribute"));
+		})
+	$project.append($editProjectLink);
 	$contain.append($project);
 
 	var $homeLink = $("#home-link");
@@ -310,7 +325,7 @@ var renderEditProfile = function(data) {
 	var $homeLink = $("#home-link");
 	$homeLink.show();
 
-	var $form = $("<form action='/users/" + data.profile.id + "' id='profile-edit-form'></form>");
+	var $form = $("<form action='/users/" + data.profile.id + "' id='profile-edit-form'><h2>Edit Your Profile</h2></form>");
 	var $username = $("<label for='username'>Username</label><input type='text' id='username-edit' name='username' value='" + data.profile.username + "'>");
 	$form.append($username);
 	var $email = $("<label for='email'>Email</label><input type='text' id='email-edit' name='email' value='" + data.profile.email + "'>");
@@ -331,7 +346,7 @@ var renderNewProject = function(data) {
 	var $homeLink = $("#home-link");
 	$homeLink.show();
 
-	var $form = $("<form action='/users/" + data + "/new-project' id='new-project-form'></form>");
+	var $form = $("<form action='/users/" + data + "/new-project' id='new-project-form' method='post'><h2>New Project</h2></form>");
 	var $title = $("<label for='title'>Title: </label><input type='text' id='title' name='title'></br>");
 	$form.append($title);
 	var $image = $("<label for='image'>Image URL: </label><input type='text' id='image' name='image'></br>");
@@ -341,6 +356,33 @@ var renderNewProject = function(data) {
 	var $github = $("<label for='github'>Github Repository: </label><input type='text' id='github' name='github'></br>");
 	$form.append($github);
 	var $url = $("<label for='url'>Project URL: </label><input type='text' id='url' name='url'></br>");
+	$form.append($url);
+	var $addButton = $("<input type='Submit' value='ADD' class='btn'>");
+	$form.append($addButton);
+
+	$contain.append($form);
+}
+
+var renderEditProject = function(data) {
+	console.log(data);
+	var $contain = $("#contain");
+	$contain.empty();
+
+	var $homeLink = $("#home-link");
+	$homeLink.show();
+
+	var user_id = Cookies.get("userId");
+
+	var $form = $("<form action='/users/" + user_id + "/projects/" + data.id + "/edit' id='edit-project-form'><h2>Edit Project</h2></form>");
+	var $title = $("<label for='title'>Title: </label><input type='text' id='title' name='title' value='" + data.title + "'></br>");
+	$form.append($title);
+	var $image = $("<label for='image'>Image URL: </label><input type='text' id='image' name='image' value='" + data.image + "'></br>");
+	$form.append($image);
+	var $description = $("<label for='description'>Description: </label><input type='text' id='description' name='description' value='" + data.description + "'></br>");
+	$form.append($description);
+	var $github = $("<label for='github'>Github Repository: </label><input type='text' id='github' name='github' value='" + data.github + "'></br>");
+	$form.append($github);
+	var $url = $("<label for='url'>Project URL: </label><input type='text' id='url' name='url' value='" + data.url + "'></br>");
 	$form.append($url);
 	var $addButton = $("<input type='Submit' value='ADD' class='btn'>");
 	$form.append($addButton);
@@ -392,6 +434,17 @@ var getProject = function(project_id) {
 	}).done(function(data) {
 		console.log(data);
 		renderProject(data);
+	})
+}
+
+var getProjectForEdit = function(project_id) {
+	// var user_id = Cookies.get("userId");
+	$.ajax({
+		url: "/projects/" + project_id,
+		method: "GET",
+	}).done(function(data) {
+		console.log(data);
+		renderEditProject(data);
 	})
 }
 
