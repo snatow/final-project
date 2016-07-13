@@ -75,6 +75,29 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+// USER SHOW - user profile
+router.get("/:user_id", function(req, res) {
+	User.findById(req.params.user_id).then(function(user, err) {
+		if (err) {
+			console.log(err);
+		} else {
+			Project.findAll({where: {userId: user.dataValues.id}}).then(function(projects) {
+				// console.log(projects.length);
+				var userProjects = [];
+				for (var i = 0; i < projects.length; i++) {
+					userProjects.push(projects[i].dataValues);
+				}
+				// console.log(userProjects);
+				var userInfo = {}
+				userInfo["profile"] = user.dataValues;
+				userInfo["projects"] = userProjects;
+				// console.log(userInfo);
+				res.send(userInfo);
+			})
+		}
+	})
+})
+
 // EDIT PROJECT FOR USER
 router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 	Project.findById(req.params.project_id).then(function(project, err) {
