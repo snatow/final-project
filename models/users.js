@@ -48,7 +48,76 @@ Comment.model.belongsTo(Project.model);
 
 User.sync().then(function() {
   Project.model.sync().then(function() {
-    Comment.model.sync()
+    Comment.model.sync().then(function() {
+      // User.create({ username: "user1", email: "user1", password: "user1" }).then(function() {
+      //   User.create({ username: "user2", email: "user2", password: "user2" }).then(function() {
+      //     User.create({ username: "user3", email: "user3", password: "user3" }).then(function() {
+      //       Project.model.create({ title: "project1", 
+      //     image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //     description: "description of project1", 
+      //     github: "https://www.google.com/", 
+      //     url: "https://www.google.com/", 
+      //     userId: 1}).then(function() {
+      //         Project.model.create({ title: "project2", 
+      //       image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //       description: "description of project2", 
+      //       github: "https://www.google.com/", 
+      //       url: "https://www.google.com/", 
+      //       userId: 1}).then(function() {
+      //           Project.model.create({ title: "project3", 
+      //         image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //         description: "description of project3", 
+      //         github: "https://www.google.com/", 
+      //         url: "https://www.google.com/", 
+      //         userId: 1}).then(function() {
+      //             Project.model.create({ title: "project4", 
+      //           image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //           description: "description of project4", 
+      //           github: "https://www.google.com/", 
+      //           url: "https://www.google.com/", 
+      //           userId: 2}).then(function() {
+      //               Project.model.create({ title: "project5", 
+      //             image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //             description: "description of project5", 
+      //             github: "https://www.google.com/", 
+      //             url: "https://www.google.com/", 
+      //             userId: 2}).then(function() {
+      //                 Project.model.create({ title: "project6", 
+      //               image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //               description: "description of project6", 
+      //               github: "https://www.google.com/", 
+      //               url: "https://www.google.com/", 
+      //               userId: 2}).then(function() {
+      //                   Project.model.create({ title: "project7", 
+      //                 image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //                 description: "description of project7", 
+      //                 github: "https://www.google.com/", 
+      //                 url: "https://www.google.com/", 
+      //                 userId: 3}).then(function() {
+      //                     Project.model.create({ title: "project8", 
+      //                   image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //                   description: "description of project8", 
+      //                   github: "https://www.google.com/", 
+      //                   url: "https://www.google.com/", 
+      //                   userId: 3}).then(function() {
+      //                       Project.model.create({ title: "project9", 
+      //                     image: "http://ualr.edu/itservices/files/2006/10/projectManagement.jpg", 
+      //                     description: "description of project9", 
+      //                     github: "https://www.google.com/", 
+      //                     url: "https://www.google.com/", 
+      //                     userId: 3})
+      //                     })
+      //                   })
+      //                 })
+      //               })
+      //             })
+      //           })
+      //         })
+      //       })
+      //     })
+      //   })
+      // })
+    })
   })
 })
 

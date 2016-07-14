@@ -29,6 +29,7 @@ $(document).ready(function() {
 		console.log('logged in');
 	  $loginForm.hide();
 	  $signupLink.hide();
+	  $signupForm.hide();
 	  $welcome.hide();
 	  $logoutLink.show();
 	  $profileLink.show();
@@ -231,9 +232,17 @@ var renderProject = function(data) {
 	var $contain = $("#contain");
 	$contain.empty();
 
-	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></br></div>");
+	var $project = $("<div class='project-full' data-attribute='" + data.id + "'></div>");
+	var $title = $("<h3>" + data.title + "</h3>");
+	$project.append($title);
+	var $image = $("<a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a>");
+	$project.append($image);
+	var $description = $("<p>Description: " + data.description + "</p>");
+	$project.append($description);
+	var $github = $("<a href='" + data.github + "'>Github Repository</a></br>");
+	$project.append($github);
 	for (var i = 0; i < data.comments.length; i++) {
-		var $comment = $("<div class='comment'><p>" + data.comments[i].content + "</p></div>");
+		var $comment = $("<div class='comment'><p class='comment-text'>" + data.comments[i].content + "</p></div>");
 		$project.append($comment);
 	};
 	if (Cookies.get("userId") == data.userId) {
