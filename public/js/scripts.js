@@ -234,10 +234,10 @@ var renderProject = function(data) {
 	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></br></div>");
 	for (var i = 0; i < data.comments.length; i++) {
 		var $comment = $("<div class='comment'><p>" + data.comments[i].content + "</p></div>");
-		$comment.append($project);
+		$project.append($comment);
 	};
 	if (Cookies.get("userId") == data.userId) {
-		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a>");
+		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a></br>");
 		$editProjectLink.click(function() {
 			console.log("clicked");
 			var target = $(event.target)
@@ -439,7 +439,9 @@ var renderEditProject = function(data) {
 };
 
 var renderCommentForm = function(user_id, project_id) {
-	
+	var $form = $("<form action='/users/" + data + "/new-project' id='new-project-form' method='post'><h2>New Project</h2></form>");
+	var $content = $("<label for='content'>Your comment: </label><input type='content' id='content' name='content'></br>");
+	$form.append($content);
 }
 
 
