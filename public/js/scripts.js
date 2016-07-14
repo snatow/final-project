@@ -248,7 +248,9 @@ var renderProject = function(data) {
 		var $commentLink = $("<a id='comment-link' data-attribute='" + data.id + "' href='#'>Comment on This Project</a>");
 		$commentLink.click(function(e) {
 			e.preventDefault();
-			var project_id = $(event.target);
+			var target = $(event.target);
+			var project_id = target.attr("data-attribute");
+			console.log("project id: " + project_id);
 			var user_id = Cookies.get("userId");
 			renderCommentForm(user_id, project_id);
 		})
@@ -257,7 +259,9 @@ var renderProject = function(data) {
 		var $commentLink = $("<a id='comment-link' data-attribute='" + data.id + "' href='#'>Comment on This Project</a>");
 		$commentLink.click(function(e) {
 			e.preventDefault();
-			var project_id = $(event.target);
+			var target = $(event.target);
+			var project_id = target.attr("data-attribute");
+			console.log("project id: " + project_id);
 			var user_id = Cookies.get("userId");
 			renderCommentForm(user_id, project_id);
 		})
@@ -439,9 +443,28 @@ var renderEditProject = function(data) {
 };
 
 var renderCommentForm = function(user_id, project_id) {
-	var $form = $("<form action='/users/" + data + "/new-project' id='new-project-form' method='post'><h2>New Project</h2></form>");
-	var $content = $("<label for='content'>Your comment: </label><input type='content' id='content' name='content'></br>");
+	var $form = $("<form action='/users/" + user_id + "/project/" + project_id + "/comment' id='comment-form' method='post'><h4>Comment</h4></form>");
+	var $content = $("<label for='content'>Your comment: </label><input type='text' id='content' name='content'></br>");
 	$form.append($content);
+	var $addButton = $("<input type='Submit' value='ADD COMMENT' class='btn'>");
+	$form.append($addButton);
+
+	$("#contain").append($form);
+
+	var $commentForm = $("#comment-form")
+	$commentForm.submit(function(e) {
+		e.preventDefault();
+		console.log("commenting on a project");
+		$.ajax({
+			url: '/users/' + user_id + '/project/' + project_id + '/comment',
+			method: 'POST',
+			data: {
+				content: $commentForm.find("[name=content]").val()
+			}
+		}).done(function(data) {
+			renderProject(data);
+		});
+	})
 }
 
 

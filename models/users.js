@@ -38,7 +38,6 @@ var User = connection.define('users', {
   }
 });
 
-
 //Relationships
 User.hasMany(Project.model);
 Project.model.belongsTo(User);
@@ -47,41 +46,11 @@ Comment.model.belongsTo(User);
 Project.model.hasMany(Comment.model);
 Comment.model.belongsTo(Project.model);
 
+User.sync().then(function() {
+  Project.model.sync().then(function() {
+    Comment.model.sync()
+  })
+})
 
-// Project.table.then(function() {
-//     connection.sync().then(function () {
-//     // Table created
-//     console.log("now we have a user table");
-//   })
-// })
-
-connection.sync().then(Project.table).then(Comment.table);
-// connection.sync().then(Project.table).then(function() {
-//   console.log("did this work?");
-// })
-// connection.sync().then(Project.table.then(function() {
-//   console.log("we made it!")
-// }));
-// connection.sync().success()
-// User.sync().then(Project.model.sync).then(Comment.model.sync);
 
 module.exports = User;
-
-// var table = function() {
-//   connection.sync().then(function () {
-//     // Table created
-//     console.log("now we have a user table");
-//   })
-// }
-
-// module.exports = {
-//   model: User,
-//   table: function() {
-//     connection.sync().then(function() {
-//       console.log("now we have a user table");
-//     })
-//   }
-// };
-// exports.table = table;
-// exports.model = User;
-
