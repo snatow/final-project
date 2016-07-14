@@ -7,7 +7,7 @@ var connection = new Sequelize(db);
 var User = require('../models/users.js');
 var passport = require('../config/passport.js');
 var Project = require('../models/projects.js').model;
-// var Comment = require('../models/comments.js');
+var Comment = require('../models/comments.js').model;
 
 // var client = new pg.Client(db);
 // client.connect();
@@ -50,7 +50,7 @@ router.post('/', function(req, res) {
 // -----------------------------------------------
 // ROUTES THAT REQUIRE AUTHENTICATION w/ JWT BELOW
 // -----------------------------------------------
-router.use(passport.authenticate('jwt', { session: false }));
+// router.use(passport.authenticate('jwt', { session: false }));
 
 // TESTING
 // router.get('/', function(req, res) {
@@ -168,8 +168,23 @@ router.post("/:user_id/new-project", function(req, res) {
 		github: req.body.github,
 		url: req.body.url,
 		userId: req.params.user_id
+	}).then(function(project) {
+		res.send(project);
 	})
-	res.send(newProject);
+	// res.send(newProject);
+})
+
+// CREATE A COMMENT ON A PROJECT FOR USER
+router.post("/:user_id/project/:project_id/comment", function(req, res) {
+	Comment.create({
+		content: req.body.content,
+		userId: req.params.user_id,
+		projectId: req.params.project_id
+	}).then(function(comment) {
+		Project.findById(comment.projectId, {include: [User, Comment]}).then(function(project) {
+			res.send(project);
+		})
+	})
 })
 
 // DELETE PROJECT FOR USER

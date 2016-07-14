@@ -89,8 +89,8 @@ app.use('/auth', authController);
 var projectsController = require('./controllers/projects.js');
 app.use('/projects', projectsController);
 
-// var commentsController = require('./controllers/comments.js');
-// app.use('/comments', commentsController);
+var commentsController = require('./controllers/comments.js');
+app.use('/comments', commentsController);
 
 
 

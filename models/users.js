@@ -7,7 +7,7 @@ var crypto = require('crypto');
 
 //Related Models
 var Project = require('./projects.js');
-// var Comment = require('./comments.js');
+var Comment = require('./comments.js');
 
 // console.log("in users")
 var User = connection.define('users', {
@@ -42,14 +42,28 @@ var User = connection.define('users', {
 //Relationships
 User.hasMany(Project.model);
 Project.model.belongsTo(User);
-// User.hasMany(Comment);
+User.hasMany(Comment.model);
+Comment.model.belongsTo(User);
+Project.model.hasMany(Comment.model);
+Comment.model.belongsTo(Project.model);
 
-Project.table.then(function() {
-    connection.sync().then(function () {
-    // Table created
-    console.log("now we have a user table");
-  })
-})
+
+// Project.table.then(function() {
+//     connection.sync().then(function () {
+//     // Table created
+//     console.log("now we have a user table");
+//   })
+// })
+
+connection.sync().then(Project.table).then(Comment.table);
+// connection.sync().then(Project.table).then(function() {
+//   console.log("did this work?");
+// })
+// connection.sync().then(Project.table.then(function() {
+//   console.log("we made it!")
+// }));
+// connection.sync().success()
+// User.sync().then(Project.model.sync).then(Comment.model.sync);
 
 module.exports = User;
 

@@ -232,15 +232,36 @@ var renderProject = function(data) {
 	$contain.empty();
 
 	var $project = $("<div class='project-full' data-attribute='" + data.id + "'><h3>" + data.title + "</h3><a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a><p>" + data.description + "</p><a href='" + data.github + "'>Github Repository</a></br></div>");
+	for (var i = 0; i < data.comments.length; i++) {
+		var $comment = $("<div class='comment'><p>" + data.comments[i].content + "</p></div>");
+		$comment.append($project);
+	};
 	if (Cookies.get("userId") == data.userId) {
 		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a>");
 		$editProjectLink.click(function() {
-				console.log("clicked");
-				var target = $(event.target)
-				console.log(target.attr("data-attribute"))
-				getProjectForEdit(target.attr("data-attribute"));
-			})
+			console.log("clicked");
+			var target = $(event.target)
+			console.log(target.attr("data-attribute"))
+			getProjectForEdit(target.attr("data-attribute"));
+		})
 		$project.append($editProjectLink);
+		var $commentLink = $("<a id='comment-link' data-attribute='" + data.id + "' href='#'>Comment on This Project</a>");
+		$commentLink.click(function(e) {
+			e.preventDefault();
+			var project_id = $(event.target);
+			var user_id = Cookies.get("userId");
+			renderCommentForm(user_id, project_id);
+		})
+		$project.append($commentLink);
+	} else {
+		var $commentLink = $("<a id='comment-link' data-attribute='" + data.id + "' href='#'>Comment on This Project</a>");
+		$commentLink.click(function(e) {
+			e.preventDefault();
+			var project_id = $(event.target);
+			var user_id = Cookies.get("userId");
+			renderCommentForm(user_id, project_id);
+		})
+		$project.append($commentLink);
 	}
 	$contain.append($project);
 
@@ -348,7 +369,8 @@ var renderNewProject = function(data) {
 	$contain.append($form);
 
 	var $newProjectForm = $("#new-project-form")
-	$$newProjectForm.submit(function(e) {
+	$newProjectForm.submit(function(e) {
+		e.stopImmediatePropagation();
 		e.preventDefault();
 		console.log("submitting new project");
 		var user_id = Cookies.get("userId");
@@ -415,6 +437,10 @@ var renderEditProject = function(data) {
 		});
 	})
 };
+
+var renderCommentForm = function(user_id, project_id) {
+	
+}
 
 
 // -----------------------------------------------------------------------------

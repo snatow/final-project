@@ -25,12 +25,15 @@ var Comment = connection.define('comments', {
 });
 
 //Relationships
-Comment.belongsTo(User);
-Comment.belongsTo(Project);
+// Comment.belongsTo(User);
+// Comment.belongsTo(Project);
 
-connection.sync().then(function () {
+var table = connection.sync().then(function () {
   // Table created
   console.log("now we have a comment table");
 });
 
-module.exports = Comment;
+module.exports = {
+  model: Comment,
+  table: table
+}

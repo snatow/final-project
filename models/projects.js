@@ -40,6 +40,7 @@ var Project = connection.define('projects', {
 var table = connection.sync().then(function() {
   //Table created
   console.log("now we have a project table");
+  // return promise;
 })
 
 module.exports = {

@@ -6,6 +6,7 @@ var db = process.env.DATABASE_URI || "postgres://localhost/social_app_dev";
 var connection = new Sequelize(db);
 var User = require('../models/users.js');
 var Project = require('../models/projects.js').model;
+var Comment = require('../models/comments.js').model;
 var passport = require('../config/passport.js');
 
 // ------------------------------
@@ -27,15 +28,15 @@ router.get("/", function(req, res) {
 // -----------------------------------------------
 // ROUTES THAT REQUIRE AUTHENTICATION w/ JWT BELOW
 // -----------------------------------------------
-router.use(passport.authenticate('jwt', { session: false }));
+// router.use(passport.authenticate('jwt', { session: false }));
 
 //SHOW
 router.get("/:project_id", function(req, res) {
-  Project.findById(req.params.project_id, {include: [User]}).then(function(project, err) {
+  Project.findById(req.params.project_id, {include: [User, Comment]}).then(function(project, err) {
     if (err) {
       console.log(err);
     } else {
-      console.log(project);
+      // console.log(project);
       res.send(project);
     }
   })
