@@ -5,15 +5,21 @@
 
 body {
   background-color: #cccccc;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 a {
   color: #000080;
   text-decoration: none;
+  font-size: 16pt;
 }
 
 a:hover {
   color: #87afc7;
+}
+
+p {
+  font-size: 16pt;
 }
 
 #contain {
