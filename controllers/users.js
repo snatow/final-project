@@ -23,13 +23,6 @@ var Comment = require('../models/comments.js').model;
 // 	res.send('bye');
 // })
 
-// //INDEX - playing around with not doing a SPA
-// router.get("/", function(req, res) {
-// 	var user = false;
-// 	res.render("index.ejs", {user: false});
-// })
-
-
 // CREATE A NEW USER
 router.post('/', function(req, res) {
 	var data = {username: req.body.username, email: req.body.email, password: req.body.password}

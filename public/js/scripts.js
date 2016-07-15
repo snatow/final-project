@@ -129,7 +129,6 @@ $(document).ready(function() {
 		$signupForm.show();
 	});
 
-	//Event listener and hanlder to edit profile form
 	
 
 	// -----------------------------------------------------------------------------
@@ -171,6 +170,7 @@ $(document).ready(function() {
 		renderNewProject(user_id);
 	})
 
+	//Event listener and handler for the about page link
 	$aboutLink.click(function(e) {
 		e.preventDefault();
 		$welcome.hide();
@@ -238,6 +238,7 @@ var renderProjectsProtected = function(data) {
 	}
 }
 
+//This rendering function is the project show page equivalent
 var renderProject = function(data) {
 	var $contain = $("#contain");
 	$contain.empty();
@@ -255,6 +256,7 @@ var renderProject = function(data) {
 		var $comment = $("<div class='comment'><p class='comment-text'>" + data.comments[i].content + "</p></div>");
 		$project.append($comment);
 	};
+	// If the project was created by the user logged in, they can see the edit link
 	if (Cookies.get("userId") == data.userId) {
 		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a></br></br>");
 		$editProjectLink.click(function() {
@@ -275,6 +277,7 @@ var renderProject = function(data) {
 		})
 		$project.append($commentLink);
 	} else {
+		//If the user logged in did not create the project, they can still comment on it
 		var $commentLink = $("<a id='comment-link' data-attribute='" + data.id + "' href='#'>Comment on This Project</a>");
 		$commentLink.click(function(e) {
 			e.preventDefault();
@@ -292,6 +295,8 @@ var renderProject = function(data) {
 	$homeLink.show();
 }
 
+//This renders the user's profile, which is presently just the projects they have added and their username
+//From this "view" only they can add new projects or update their profiles
 var renderProfile = function(data) {
 	var $contain = $("#contain");
 	$contain.empty();
@@ -323,6 +328,7 @@ var renderProfile = function(data) {
 	$profileLink.hide();
 }
 
+//This renders the form to allow the user to edit his/her profile
 var renderEditProfile = function(data) {
 	var $contain = $("#contain");
 	$contain.empty();
@@ -367,6 +373,7 @@ var renderEditProfile = function(data) {
 	profileEditFormSubmit();
 }
 
+//This renders the form to allow the user to create a new project
 var renderNewProject = function(data) {
 	// console.log(data);
 	var $contain = $("#contain");
@@ -413,6 +420,8 @@ var renderNewProject = function(data) {
 	})
 };
 
+//This renders the form to allow a user to edit one of his or her projects
+//If this is rendered, the user can also delete
 var renderEditProject = function(data) {
 	// console.log(data);
 	var $contain = $("#contain");
@@ -460,6 +469,7 @@ var renderEditProject = function(data) {
 		});
 	})
 
+	//This button and functionality allows the user to delete a project
 	var $deleteButton = $("<button id='delete' data-attribute='" + data.id + "' class='btn'>Delete This Project</button>");
 	$contain.append($deleteButton);
 
@@ -478,6 +488,7 @@ var renderEditProject = function(data) {
 	})
 };
 
+//This renders the form to allow a user to comment on a project
 var renderCommentForm = function(user_id, project_id) {
 	var $form = $("<form action='/users/" + user_id + "/project/" + project_id + "/comment' id='comment-form' method='post'><h4>Comment</h4></form>");
 	var $content = $("<label for='content'>Your comment: </label><input type='text' id='content' name='content'></br>");
@@ -503,6 +514,7 @@ var renderCommentForm = function(user_id, project_id) {
 	})
 }
 
+//This render's the about "page"
 var renderAbout = function() {
 	var $contain = $("#contain");
 	$contain.empty();
@@ -547,6 +559,7 @@ var getProjectsProtected = function() {
 	})
 };
 
+//This AJAX call will get the data to render an individual project
 var getProject = function(project_id) {
 	// var user_id = Cookies.get("userId");
 	$.ajax({
@@ -559,6 +572,7 @@ var getProject = function(project_id) {
 	})
 }
 
+//This AJAX call will get the data to allow a user to edit a project via the edit form
 var getProjectForEdit = function(project_id) {
 	// var user_id = Cookies.get("userId");
 	$.ajax({
@@ -570,6 +584,7 @@ var getProjectForEdit = function(project_id) {
 	})
 }
 
+//This AJAX call will get the user's profile to render their profile "view"
 var getProfile = function(user_id) {
 	$.ajax({
 		url: "/users/" + user_id,
@@ -580,6 +595,7 @@ var getProfile = function(user_id) {
 	})
 }
 
+//This AJAX call will get the user's profile data (minus password) and allow them to edit it via the edit form
 var getProfileForEdit = function(user_id) {
 	$.ajax({
 		url: "/users/" + user_id,

@@ -23,13 +23,10 @@ JwtOpts.secretOrKey = process.env.JWT_SECRET;
 
 passport.use(new JwtStrategy(JwtOpts, function(jwt_payload, done) {
   console.log( "JWT PAYLOAD" + util.inspect(jwt_payload));
-  User.find({where: {username: jwt_payload.username}}).then(function(result) {
-    //I need to add back error handling - thinking the err param should go second
-    // if (err) {
-    //     return done(err, false);
-    // }
-
-    if (result) {
+  User.find({where: {username: jwt_payload.username}}).then(function(result, err) {
+    if (err) {
+        return done(err, false);
+    } else if (result) {
         console.log(result);
         console.log("user is " + result.username)
         done(null, result);
@@ -41,13 +38,12 @@ passport.use(new JwtStrategy(JwtOpts, function(jwt_payload, done) {
 
 passport.use( new LocalStrategy (
   function( username, password, done ) {
-    User.find({where: {username: username} }).then(function(dbUser) {
+    User.find({where: {username: username} }).then(function(dbUser, err) {
       // console.log("in passport, dbUser")
       // console.log(dbUser);
-      
-      //I need to add back error handling - thinking the err param should go second
-      // if (err) { return done(err); }
-      if (!dbUser) {
+
+      if (err) { return done(err); }
+      else if (!dbUser) {
         return done(null, false);
       }
       if (!dbUser.authenticate(password)) {
