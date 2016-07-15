@@ -33,17 +33,8 @@ var Comment = require('../models/comments.js').model;
 // CREATE A NEW USER
 router.post('/', function(req, res) {
 	var data = {username: req.body.username, email: req.body.email, password: req.body.password}
-	// console.log("username: " + data.username);
-	// pg.connect(db, function(err, client, done) {
-	// 	if (err) {
-	// 		done();
-	// 		console.log(err);
-	// 	}
-	// 	client.query("INSERT INTO users(username, email, password) values($1, $2, $3)", [data.username, data.email, data.password]);
-	// 	res.send(true);
-	// })
 	var newUser = User.create({username: data.username, email: data.email, password: data.password})
-	console.log(newUser);
+	// console.log(newUser);
 	res.send(true);
 });
 
@@ -63,13 +54,11 @@ router.get('/test', function(req, res) {
 
 // INDEX
 router.get('/', function(req, res, next) {
-	// User.find(function(users) {
-	// client.query("SELECT * FROM users", function(err, users){
 	User.findAll({include: [Project]}).then(function(users, err) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(users);
+			// console.log(users);
 			res.send(users);
 		}
 	});
@@ -116,8 +105,8 @@ router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 
 //UPDATE USER PROFILE
 router.put("/:user_id", function(req, res) {
-	console.log("username");
-	console.log(req.body.username);
+	// console.log("username");
+	// console.log(req.body.username);
 	User.findById(req.params.user_id).then(function(user) {
 		user.update({
 			username: req.body.username,
@@ -190,8 +179,8 @@ router.post("/:user_id/project/:project_id/comment", function(req, res) {
 // DELETE PROJECT FOR USER
 router.delete("/:user_id/projects/:project_id/delete", function(req, res) {
 	Project.findById(req.params.project_id).then(function(project, err) {
-		console.log("=======================");
-		console.log(project);
+		// console.log("=======================");
+		// console.log(project);
 		if (err) {
 			console.log(err);
 		} else if (project.dataValues.userId == req.params.user_id) {

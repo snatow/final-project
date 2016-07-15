@@ -59,7 +59,7 @@ $(document).ready(function() {
 	    	password: $loginForm.find("[name=password]").val()
 	    }
 	  }).success(function(data){
-	    console.log(data);
+	    // console.log(data);
 	    if(data.token){
 	      Cookies.set("jwt_token", data.token);
 	      Cookies.set("userId", data.userId);
@@ -80,10 +80,10 @@ $(document).ready(function() {
 	// Event listener and handler to signup
 	$signupForm.submit(function(e) {
 		e.preventDefault();
-		console.log('sending ajax to signup');
-		console.log($signupForm.find("[name=username]").val());
-		console.log($signupForm.find("[name=email]").val());
-		console.log($signupForm.find("[name=password]").val());
+		// console.log('sending ajax to signup');
+		// console.log($signupForm.find("[name=username]").val());
+		// console.log($signupForm.find("[name=email]").val());
+		// console.log($signupForm.find("[name=password]").val());
 		$.ajax({
 			url: '/users',
 			method: 'POST',
@@ -151,14 +151,14 @@ $(document).ready(function() {
 		$profileEditLink.show();
 		$newProjectLink.show();
 		var user_id = Cookies.get("userId");
-		console.log(user_id);
+		// console.log(user_id);
 		getProfile(user_id);
 	})
 
 	//Event listener and handler to edit the user profile
 	$profileEditLink.click(function(e) {
 		e.preventDefault();
-		console.log("edit profile clicked");
+		// console.log("edit profile clicked");
 		var user_id = Cookies.get("userId");
 		getProfileForEdit(user_id);
 	})
@@ -166,7 +166,7 @@ $(document).ready(function() {
 	//Event listener and handler to create a new project
 	$newProjectLink.click(function(e) {
 		e.preventDefault();
-		console.log("new project");
+		// console.log("new project");
 		var user_id = Cookies.get("userId");
 		renderNewProject(user_id);
 	})
@@ -229,9 +229,9 @@ var renderProjectsProtected = function(data) {
 
 		// class='preview-image' src='" + data[i].image + "'
 		$project.click(function() {
-			console.log("clicked");
+			// console.log("clicked");
 			var target = $(event.target)
-			console.log(target.attr("data-attribute"))
+			// console.log(target.attr("data-attribute"))
 			getProject(target.attr("data-attribute"));
 		})
 		$contain.append($project);
@@ -249,7 +249,7 @@ var renderProject = function(data) {
 	$project.append($image);
 	var $description = $("<p>Description: " + data.description + "</p></br>");
 	$project.append($description);
-	var $github = $("<a href='" + data.github + "'>Github Repository</a></br>");
+	var $github = $("<a href='" + data.github + "'>Github Repository</a></br></br>");
 	$project.append($github);
 	for (var i = 0; i < data.comments.length; i++) {
 		var $comment = $("<div class='comment'><p class='comment-text'>" + data.comments[i].content + "</p></div>");
@@ -258,9 +258,9 @@ var renderProject = function(data) {
 	if (Cookies.get("userId") == data.userId) {
 		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a></br></br>");
 		$editProjectLink.click(function() {
-			console.log("clicked");
+			// console.log("clicked");
 			var target = $(event.target)
-			console.log(target.attr("data-attribute"))
+			// console.log(target.attr("data-attribute"))
 			getProjectForEdit(target.attr("data-attribute"));
 		})
 		$project.append($editProjectLink);
@@ -269,7 +269,7 @@ var renderProject = function(data) {
 			e.preventDefault();
 			var target = $(event.target);
 			var project_id = target.attr("data-attribute");
-			console.log("project id: " + project_id);
+			// console.log("project id: " + project_id);
 			var user_id = Cookies.get("userId");
 			renderCommentForm(user_id, project_id);
 		})
@@ -280,7 +280,7 @@ var renderProject = function(data) {
 			e.preventDefault();
 			var target = $(event.target);
 			var project_id = target.attr("data-attribute");
-			console.log("project id: " + project_id);
+			// console.log("project id: " + project_id);
 			var user_id = Cookies.get("userId");
 			renderCommentForm(user_id, project_id);
 		})
@@ -308,9 +308,9 @@ var renderProfile = function(data) {
 		$project.append($img);
 
 		$project.click(function() {
-			console.log("clicked");
+			// console.log("clicked");
 			var target = $(event.target)
-			console.log(target.attr("data-attribute"))
+			// console.log(target.attr("data-attribute"))
 			getProject(target.attr("data-attribute"));
 		})
 		$contain.append($project);
@@ -345,9 +345,9 @@ var renderEditProfile = function(data) {
 		$profileEditForm.submit(function(e) {
 			e.stopImmediatePropagation();
 			e.preventDefault();
-			console.log("edit form submit");
+			// console.log("edit form submit");
 			var user_id = Cookies.get("userId");
-			console.log(user_id);
+			// console.log(user_id);
 			// return false;
 			$.ajax({
 				url: '/users/' + user_id,
@@ -357,7 +357,7 @@ var renderEditProfile = function(data) {
 					email: $profileEditForm.find("[name=email]").val()
 				}
 			}).done(function(data) {
-				console.log(data);
+				// console.log(data);
 				renderProfile(data);
 			});
 		})
@@ -368,7 +368,7 @@ var renderEditProfile = function(data) {
 }
 
 var renderNewProject = function(data) {
-	console.log(data);
+	// console.log(data);
 	var $contain = $("#contain");
 	$contain.empty();
 
@@ -395,7 +395,7 @@ var renderNewProject = function(data) {
 	$newProjectForm.submit(function(e) {
 		e.stopImmediatePropagation();
 		e.preventDefault();
-		console.log("submitting new project");
+		// console.log("submitting new project");
 		var user_id = Cookies.get("userId");
 		$.ajax({
 			url: '/users/' + user_id + '/new-project',
@@ -414,7 +414,7 @@ var renderNewProject = function(data) {
 };
 
 var renderEditProject = function(data) {
-	console.log(data);
+	// console.log(data);
 	var $contain = $("#contain");
 	$contain.empty();
 
@@ -442,9 +442,9 @@ var renderEditProject = function(data) {
 	var $editProjectForm = $("#edit-project-form")
 	$editProjectForm.submit(function(e) {
 		e.preventDefault();
-		console.log("editing project");
+		// console.log("editing project");
 		var target = $(event.target);
-		console.log(target.attr("data-attribute"))
+		// console.log(target.attr("data-attribute"))
 		$.ajax({
 			url: '/users/project/' + target.attr("data-attribute"),
 			method: 'PUT',
@@ -465,9 +465,9 @@ var renderEditProject = function(data) {
 
 	$("#delete").click(function(e) {
 		e.preventDefault();
-		console.log("deleting project");
+		// console.log("deleting project");
 		var target = $(event.target);
-		console.log(target.attr("data-attribute"));
+		// console.log(target.attr("data-attribute"));
 		var user_id = Cookies.get("userId");
 		$.ajax({
 			url: '/users/' + user_id + '/projects/' + target.attr("data-attribute") + '/delete',
@@ -490,7 +490,7 @@ var renderCommentForm = function(user_id, project_id) {
 	var $commentForm = $("#comment-form")
 	$commentForm.submit(function(e) {
 		e.preventDefault();
-		console.log("commenting on a project");
+		// console.log("commenting on a project");
 		$.ajax({
 			url: '/users/' + user_id + '/project/' + project_id + '/comment',
 			method: 'POST',
@@ -521,7 +521,7 @@ var testAuth = function() {
 		url: '/users/test',
 		method: 'GET'
 	}).done(function(data) {
-		console.log(data);
+		// console.log(data);
 	});	
 };
 
@@ -531,7 +531,7 @@ var getProjects = function() {
 		url: "/projects",
 		method: "GET"
 	}).done(function(data) {
-		console.log(data);
+		// console.log(data);
 		renderProjects(data);
 	})
 };
@@ -542,7 +542,7 @@ var getProjectsProtected = function() {
 		url: "/projects",
 		method: "GET"
 	}).done(function(data) {
-		console.log(data);
+		// console.log(data);
 		renderProjectsProtected(data);
 	})
 };
@@ -553,8 +553,8 @@ var getProject = function(project_id) {
 		url: "/projects/" + project_id,
 		method: "GET",
 	}).done(function(data) {
-		console.log(data);
-		console.log("project's user id: " + data.userId);
+		// console.log(data);
+		// console.log("project's user id: " + data.userId);
 		renderProject(data);
 	})
 }
@@ -565,7 +565,7 @@ var getProjectForEdit = function(project_id) {
 		url: "/projects/" + project_id,
 		method: "GET",
 	}).done(function(data) {
-		console.log(data);
+		// console.log(data);
 		renderEditProject(data);
 	})
 }
@@ -575,7 +575,7 @@ var getProfile = function(user_id) {
 		url: "/users/" + user_id,
 		method: "GET",
 	}).done(function(data) {
-		console.log(data);
+		// console.log(data);
 		renderProfile(data);
 	})
 }
@@ -585,7 +585,7 @@ var getProfileForEdit = function(user_id) {
 		url: "/users/" + user_id,
 		method: "GET",
 	}).done(function(data) {
-		console.log(data);
+		// console.log(data);
 		renderEditProfile(data);
 	})
 }
