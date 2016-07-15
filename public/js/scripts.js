@@ -19,6 +19,7 @@ $(document).ready(function() {
 	var $profileLink = $("#profile-link");
 	var $profileEditLink = $("#profile-edit-link");
 	var $newProjectLink = $("#new-project-link");
+	var $aboutLink = $("#about-link");
 
 	// -----------------------------------------------------------------------------
 	// FUNCTIONS TO HANDLE USER EXPERIENCE FOR AUTH
@@ -168,6 +169,15 @@ $(document).ready(function() {
 		console.log("new project");
 		var user_id = Cookies.get("userId");
 		renderNewProject(user_id);
+	})
+
+	$aboutLink.click(function(e) {
+		e.preventDefault();
+		$welcome.hide();
+		if (Cookies.get("jwt_token")) {
+			$homeLink.show();
+		}
+		renderAbout();
 	})
 
 
@@ -491,6 +501,14 @@ var renderCommentForm = function(user_id, project_id) {
 			renderProject(data);
 		});
 	})
+}
+
+var renderAbout = function() {
+	var $contain = $("#contain");
+	$contain.empty();
+
+	var $about = $("<p class='about'>developer.connect() is a community forum where web developers can share projects they are working on, view projects created by others and comment on those projects. If you want to become involved, please sign up at the link above.</p>");
+	$contain.append($about);
 }
 
 
