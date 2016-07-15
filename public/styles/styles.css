@@ -121,11 +121,13 @@ header {
   box-sizing: border-box;
   border: 5px solid white;
   margin: 5px;
+  /*min-height: 250px;*/
 }
 
 .preview-image {
   max-width: 200px;
   margin: 5px;
+  max-height: 120px;
 }
 
 footer {
@@ -255,7 +257,7 @@ footer {
   #welcome {
     margin: 0 auto;
     text-align: center;
-    width: 250px;
+    width: 400px;
   }
 
   .logo {
