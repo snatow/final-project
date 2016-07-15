@@ -4,44 +4,83 @@
 }
 
 body {
-  background-color: lightgrey;
+  background-color: #cccccc;
+}
+
+a {
+  color: #000080;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #87afc7;
 }
 
 #contain {
-  width: 720px;
-  margin: 0 auto;
+  width: 240px;
+  margin-left: 14.5%;
 }
 
 #logout-link {
   float: right;
-  margin-left: 2%;
-}
-
-#profile-link {
-  float: right;
+  margin-left: 13%;
 }
 
 #profile-edit-link {
   float: right;
-  margin-left: 2%;
+  margin-left: 13%;
 }
 
 #new-project-link {
   float: right;
 }
 
-.header {
-  display: inline-block;
-  box-sizing: border-box;
+h2 {
+  text-align: center;
+}
+
+input {
+  border: 1px solid black;
+}
+
+#welcome {
+  padding: 20px;
+  margin-left: 5%;
+  text-align: center;
+  width: 250px;
 }
 
 .logo {
   width: 200px;
 }
 
+#logo {
+  margin-left: 19%;
+}
+
+.project-full {
+  width: 230px
+}
+
 #login-contain {
-  width: 500px;
-  /*float: right;*/
+  /*width: 500px;*/
+  margin-left: -4%;
+  margin-top: 25px;
+}
+
+#login-form {
+  margin-top: -15px;
+  width: 200px;
+  padding-bottom: 20px;
+  margin-left: 15%;
+}
+
+#about-link {
+  margin-left: 13%;
+}
+
+#home-link {
+  margin-left: 2%;
 }
 
 h3 {
@@ -82,19 +121,214 @@ footer {
   background-color: white;
   margin-top: 40px;
   height: 100px;
+  /*width: 500px;*/
+  padding-top: 15px;
 }
 
 .full-image {
-  max-width: 500px;
+  max-width: 230px;
 }
 
 .comment {
   border: 2px solid black;
-  width: 500px;
+  width: 230px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .comment-text {
   margin: 5px;
+}
+
+.about {
+  margin-top: 50px;
+}
+
+@media screen and (min-width: 370px) {
+  #contain {
+    width: 240px;
+    margin-left: 12%;
+  }
+
+  #logout-link {
+    float: right;
+    margin-right: 16%;
+  }
+
+  .header {
+    width: 200px;
+  }
+
+  #profile-edit-link {
+    float: right;
+    margin-left: 13%;
+  }
+
+  #welcome {
+    padding: 20px;
+    margin-left: 4%;
+    text-align: center;
+    width: 250px;
+  }
+
+  #logo {
+    margin-left: 16%;
+  }
+
+  #login-contain {
+    width: 500px;
+    margin-top: 25px;
+  }
+
+  #about-link {
+    margin-left: 15%;
+  }
+
+  #home-link {
+    margin-left: 2%;
+  }
+
+}
+
+@media screen and (min-width: 700px) {
+  body {
+    font-size: 14pt;
+  }
+
+  #contain {
+    width: 720px;
+    margin: 0 auto;
+    min-height: 700px;
+  }
+
+  #logo {
+    margin-left: 0px;
+  }
+
+  .project-full {
+    /*this isn't working, and I don't know why*/
+    width: 500px
+    padding-left: 120px;
+  }
+
+  h2 {
+    text-align: left;
+    font-size: 20pt;
+    margin-bottom: 15px;
+  }
+
+  #logout-link {
+    float: right;
+    margin-left: 2%;
+    margin-right: 0px;
+  }
+
+  #profile-link {
+    float: right;
+  }
+
+  #profile-edit-link {
+    float: right;
+    margin-left: 2%;
+  }
+
+  #new-project-link {
+    float: right;
+  }
+
+  .header {
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  #welcome {
+    margin: 0 auto;
+    text-align: center;
+    width: 250px;
+  }
+
+  .logo {
+    width: 200px;
+  }
+
+  #login-contain {
+    width: 500px;
+  }
+
+  #login-form {
+    margin-top: -15px;
+    width: 500px;
+    padding-bottom: 20px;
+  }
+
+  h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18pt;
+  }
+
+  h4 {
+    margin-bottom: 10px;
+    margin-top: 15px;
+    font-size: 16pt;
+  }
+
+  .btn {
+    background-color: #000080;
+    color: white;
+    border: 1px solid black;
+  }
+
+  header {
+    background-color: white;
+  }
+
+  .project-preview {
+    width: 218px;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 5px solid white;
+    margin: 5px;
+  }
+
+  .preview-image {
+    max-width: 200px;
+    margin: 5px;
+  }
+
+  footer {
+    background-color: white;
+    margin-top: 40px;
+    height: 100px;
+  }
+
+  .full-image {
+    max-width: 500px;
+  }
+
+  .comment {
+    border: 2px solid black;
+    width: 500px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .comment-text {
+    margin: 5px;
+  }
+
+  #home-link {
+    margin-left: 30%;
+  }
+
+  input {
+    font-size: 1em;
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-size: 16pt;
+  }
+
 }

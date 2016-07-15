@@ -247,7 +247,7 @@ var renderProject = function(data) {
 	$project.append($title);
 	var $image = $("<a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a>");
 	$project.append($image);
-	var $description = $("<p>Description: " + data.description + "</p>");
+	var $description = $("<p>Description: " + data.description + "</p></br>");
 	$project.append($description);
 	var $github = $("<a href='" + data.github + "'>Github Repository</a></br>");
 	$project.append($github);
@@ -256,7 +256,7 @@ var renderProject = function(data) {
 		$project.append($comment);
 	};
 	if (Cookies.get("userId") == data.userId) {
-		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a></br>");
+		var $editProjectLink = $("<a id='edit-project-link' data-attribute='" + data.id + "' href='#'>Edit This Project</a></br></br>");
 		$editProjectLink.click(function() {
 			console.log("clicked");
 			var target = $(event.target)
@@ -331,9 +331,9 @@ var renderEditProfile = function(data) {
 	$homeLink.show();
 
 	var $form = $("<form action='/users/" + data.profile.id + "' id='profile-edit-form'><h2>Edit Your Profile</h2></form>");
-	var $username = $("<label for='username'>Username</label><input type='text' id='username-edit' name='username' value='" + data.profile.username + "'>");
+	var $username = $("<label for='username'>Username: </label><input type='text' id='username-edit' name='username' value='" + data.profile.username + "'></br>");
 	$form.append($username);
-	var $email = $("<label for='email'>Email</label><input type='text' id='email-edit' name='email' value='" + data.profile.email + "'>");
+	var $email = $("<label for='email'>Email: </label><input type='text' id='email-edit' name='email' value='" + data.profile.email + "'></br>");
 	$form.append($email);
 	var $hidden = $("<input type='hidden' name='_method' value='PUT'/>");
 	$form.append($hidden);
@@ -382,7 +382,7 @@ var renderNewProject = function(data) {
 	$form.append($image);
 	var $description = $("<label for='description'>Description: </label><input type='text' id='description' name='description'></br>");
 	$form.append($description);
-	var $github = $("<label for='github'>Github Repository: </label><input type='text' id='github' name='github'></br>");
+	var $github = $("<label for='github'>Github: </label><input type='text' id='github' name='github'></br>");
 	$form.append($github);
 	var $url = $("<label for='url'>Project URL: </label><input type='text' id='url' name='url'></br>");
 	$form.append($url);
@@ -434,7 +434,7 @@ var renderEditProject = function(data) {
 	$form.append($github);
 	var $url = $("<label for='url'>Project URL: </label><input type='text' id='url' name='url' value='" + data.url + "'></br>");
 	$form.append($url);
-	var $addButton = $("<input type='Submit' value='ADD' class='btn'>");
+	var $addButton = $("<input type='Submit' value='EDIT' class='btn'></br></br>");
 	$form.append($addButton);
 
 	$contain.append($form);
