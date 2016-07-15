@@ -190,9 +190,11 @@ router.post("/:user_id/project/:project_id/comment", function(req, res) {
 // DELETE PROJECT FOR USER
 router.delete("/:user_id/projects/:project_id/delete", function(req, res) {
 	Project.findById(req.params.project_id).then(function(project, err) {
+		console.log("=======================");
+		console.log(project);
 		if (err) {
 			console.log(err);
-		} else if (project.users.user_id === req.params.user_id) {
+		} else if (project.dataValues.userId == req.params.user_id) {
 			project.destroy();
 			res.send(true);
 		} else {

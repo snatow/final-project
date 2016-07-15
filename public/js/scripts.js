@@ -433,7 +433,7 @@ var renderEditProject = function(data) {
 	$editProjectForm.submit(function(e) {
 		e.preventDefault();
 		console.log("editing project");
-		var target = $(event.target)
+		var target = $(event.target);
 		console.log(target.attr("data-attribute"))
 		$.ajax({
 			url: '/users/project/' + target.attr("data-attribute"),
@@ -448,6 +448,23 @@ var renderEditProject = function(data) {
 		}).done(function(data) {
 			renderProject(data);
 		});
+	})
+
+	var $deleteButton = $("<button id='delete' data-attribute='" + data.id + "' class='btn'>Delete This Project</button>");
+	$contain.append($deleteButton);
+
+	$("#delete").click(function(e) {
+		e.preventDefault();
+		console.log("deleting project");
+		var target = $(event.target);
+		console.log(target.attr("data-attribute"));
+		var user_id = Cookies.get("userId");
+		$.ajax({
+			url: '/users/' + user_id + '/projects/' + target.attr("data-attribute") + '/delete',
+			method: 'DELETE'
+		}).done(function() {
+			getProjectsProtected();
+		})
 	})
 };
 
