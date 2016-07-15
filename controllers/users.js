@@ -41,9 +41,9 @@ router.post('/', function(req, res) {
 // 	console.log('hi');
 // 	res.send('bye');
 // });
-router.get('/test', function(req, res) {
-	res.send('This should work only if logged in');
-});
+// router.get('/test', function(req, res) {
+// 	res.send('This should work only if logged in');
+// });
 
 // INDEX
 router.get('/', function(req, res, next) {
@@ -95,6 +95,17 @@ router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 		}
 	})
 })
+
+//DATA VISUALIZATION - GETS INFO FOR D3 
+//this needs a lot of work
+// router.get("/visualization/data", function(req, res) {
+// 	// User.findAll({include: [Project, Comment]}).then(function(users) {
+// 	// 	res.send(users);
+// 	// })
+// 	Project.findAll({include: [User, Comment]}).then(function(project) {
+// 		res.send(project);
+// 	})
+// })
 
 //UPDATE USER PROFILE
 router.put("/:user_id", function(req, res) {
