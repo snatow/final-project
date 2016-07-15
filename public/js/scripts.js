@@ -254,6 +254,21 @@ var renderProject = function(data) {
 	$project.append($github);
 	for (var i = 0; i < data.comments.length; i++) {
 		var $comment = $("<div class='comment'><p class='comment-text'>" + data.comments[i].content + "</p></div>");
+		if (Cookies.get("userId") == data.comments[i].userId) {
+			var $commentDeleteButton = $("<button data-project='" + data.id + "' data-comment='" + data.comments[i].id + "' class='btn delete-btn'>DELETE</button>");
+			$commentDeleteButton.click(function() {
+				console.log("clicked");
+				var target = $(event.target);
+				var comment_id = target.attr("data-comment");
+				console.log("commentId: " + comment_id);
+				var project_id = target.attr("data-project");
+				console.log("projectId: " + project_id);
+				var user_id = Cookies.get("userId");
+				console.log("userID: " + user_id);
+				deleteComment(user_id, project_id, comment_id);
+			})
+			$comment.append($commentDeleteButton);
+		}
 		$project.append($comment);
 	};
 	// If the project was created by the user logged in, they can see the edit link
@@ -603,6 +618,16 @@ var getProfileForEdit = function(user_id) {
 	}).done(function(data) {
 		// console.log(data);
 		renderEditProfile(data);
+	})
+}
+
+//This AJAX will allow a user to delete a comment if they wrote the comment and refresh the project show "view"
+var deleteComment = function(user_id, project_id, comment_id) {
+	$.ajax({
+		url: "/users/" + user_id + "/project/" + project_id + "/comment/" + comment_id,
+		method: "DELETE"
+	}).done(function(data) {
+		renderProject(data);
 	})
 }
 

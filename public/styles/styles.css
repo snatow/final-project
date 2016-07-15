@@ -21,6 +21,11 @@ a:hover {
   margin-left: 14.5%;
 }
 
+.delete-btn {
+  float: right;
+  margin-top: -25px;
+}
+
 #logout-link {
   float: right;
   margin-left: 13%;
@@ -207,7 +212,7 @@ footer {
 
   .project-full {
     /*this isn't working, and I don't know why*/
-    width: 500px
+    width: 500px;
     padding-left: 120px;
   }
 

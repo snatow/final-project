@@ -34,7 +34,7 @@ router.post('/', function(req, res) {
 // -----------------------------------------------
 // ROUTES THAT REQUIRE AUTHENTICATION w/ JWT BELOW
 // -----------------------------------------------
-router.use(passport.authenticate('jwt', { session: false }));
+// router.use(passport.authenticate('jwt', { session: false }));
 
 // TESTING
 // router.get('/', function(req, res) {
@@ -179,6 +179,31 @@ router.delete("/:user_id/projects/:project_id/delete", function(req, res) {
 		} else if (project.dataValues.userId == req.params.user_id) {
 			project.destroy();
 			res.send(true);
+		} else {
+			console.log("you do not have the correct permissions");
+		}
+	})
+})
+
+// DELETE COMMENT
+router.delete("/:user_id/project/:project_id/comment/:comment_id", function(req, res) {
+	Comment.findById(req.params.comment_id).then(function(comment, err) {
+		console.log("=======================");
+		console.log("comment");
+		console.log(comment);
+		if (err) {
+			console.log(err);
+		} else if (comment.dataValues.userId == req.params.user_id) {
+			comment.destroy();
+			// res.send(true);
+			Project.findById(req.params.project_id, {include: [User, Comment]}).then(function(project, error) {
+				if (error) {
+					console.log(error);
+				} else {
+					console.log(project);
+					res.send(project);
+				}
+			})
 		} else {
 			console.log("you do not have the correct permissions");
 		}
