@@ -28,7 +28,7 @@ router.get("/", function(req, res) {
 // -----------------------------------------------
 // ROUTES THAT REQUIRE AUTHENTICATION w/ JWT BELOW
 // -----------------------------------------------
-router.use(passport.authenticate('jwt', { session: false }));
+// router.use(passport.authenticate('jwt', { session: false }));
 
 //SHOW
 router.get("/:project_id", function(req, res) {

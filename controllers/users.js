@@ -170,13 +170,18 @@ router.post("/:user_id/new-project", function(req, res) {
 
 // CREATE A COMMENT ON A PROJECT FOR USER
 router.post("/:user_id/project/:project_id/comment", function(req, res) {
-	Comment.create({
-		content: req.body.content,
-		userId: req.params.user_id,
-		projectId: req.params.project_id
-	}).then(function(comment) {
-		Project.findById(comment.projectId, {include: [User, Comment]}).then(function(project) {
-			res.send(project);
+	var username = "";
+	User.findById(req.params.user_id).then(function(user) {
+		username = user.dataValues.username;
+	}).then(function() {
+			Comment.create({
+			content: username + ": " + req.body.content,
+			userId: req.params.user_id,
+			projectId: req.params.project_id
+		}).then(function(comment) {
+			Project.findById(comment.projectId, {include: [User, Comment]}).then(function(project) {
+				res.send(project);
+			})
 		})
 	})
 })
