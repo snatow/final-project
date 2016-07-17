@@ -18,4 +18,4 @@ Tech used
 
 Features
 
-Users can create accounts that will give them the ability to view details about projects within the network, comment on those projects, post their own projects which they can edit and delete, and update their usernames and emails. 
+Users can create accounts that will give them the ability to view details about projects within the network, comment on those projects, post their own projects which they can edit and delete, and update their usernames and emails. Users can also see a visual represtation of the connections across the network.
