@@ -1,4 +1,4 @@
-![logo](https://github.com/snatow/final-project/blob/master/public/images/logo.png)
+![logo](https://github.com/snatow/final-project/blob/master/public/images/logo_small.png)
 
 ## developer.connect()
 
@@ -14,6 +14,7 @@ Tech used
 - Passport
 - Jwt Tokens
 - jQuery
+- D3js
 
 Features
 
