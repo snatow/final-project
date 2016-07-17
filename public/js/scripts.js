@@ -315,7 +315,8 @@ var renderProject = function(data) {
 	var $project = $("<div class='project-full' data-attribute='" + data.id + "'></div>");
 	var $title = $("<h3>" + data.title + "</h3>");
 	$project.append($title);
-	var $user = $("<h3>Created by: " + data.user.username + "</h3>")
+	var $user = $("<p>Created by: " + data.user.username + "</p>");
+	$project.append($user);
 	var $image = $("<a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a>");
 	$project.append($image);
 	var $description = $("<p>Description: " + data.description + "</p></br>");

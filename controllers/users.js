@@ -187,7 +187,11 @@ router.put("/project/:project_id", function(req, res) {
 				github: req.body.github,
 				url: req.body.url
 			}).then(function(project) {
-				res.send(project);
+				// console.log(project);
+				// res.send(project);
+				Project.findById(project.dataValues.id, {include: [User, Comment]}).then(function(project) {
+					res.send(project);
+				})
 			})
 		}
 	})
