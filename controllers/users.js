@@ -100,11 +100,51 @@ router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 //this needs a lot of work
 router.get("/visualization/data", function(req, res) {
 	// User.findAll({include: [Project, Comment]}).then(function(users) {
-	// 	// res.send(users);
-	// 	res.send(users[0]);
+	// 	var nodeArray = [];
+	// 	for (var i = 0; i < users.length; i++) {
+	// 		var nodeObj = {"name": users[i].username};
+	// 		nodeArray.push(nodeObj);
+	// 	}
+	// 	// res.send(nodeArray);
 	// })
-	Project.findAll({include: [User, Comment]}).then(function(project) {
-		res.send(project);
+	var commentData;
+	var userData;
+	Comment.findAll({include: [User, Project]}).then(function(comments) {
+		commentData = comments;
+	}).then(function() {
+		User.findAll({include: [Project, Comment]}).then(function(users) {
+			userData = users;
+		}).then(function() {
+			// var data = {
+			// 	"comments": commentData,
+			// 	"users": userData
+			// }
+			// res.send(data);
+			var nodeArray = [];
+			for (var i = 0; i < userData.length; i++) {
+				var nodeObj = {"name": userData[i].username};
+				nodeArray.push(nodeObj);
+			}
+			var linkArray = [];
+			for (var j = 0; j < userData.length; j++) {
+				for (var k = 0; k < userData[j].projects.length; k++) {
+					for (var m = 0; m < commentData.length; m ++) {
+						if (userData[j].projects[k].id == commentData[m].projectId) {
+							var linkObj = {
+								"source": (parseInt(userData[j].id) - 1),
+								"target": (parseInt(commentData[m].userId) - 1)
+							}
+							linkArray.push(linkObj);
+						}
+					}
+				}
+			}
+			var data = {
+				"nodes": nodeArray,
+				"links": linkArray
+			}
+			res.send(data);
+		})
 	})
 })
 
