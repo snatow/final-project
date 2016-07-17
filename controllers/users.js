@@ -116,6 +116,8 @@ router.get("/visualization/data", function(req, res) {
 				for (var k = 0; k < userData[j].projects.length; k++) {
 					for (var m = 0; m < commentData.length; m ++) {
 						if (userData[j].projects[k].id == commentData[m].projectId) {
+							//Heroku skipped the next ID number after the seed data
+							// so I need this conditional to make sure the links work
 							if (commentData[m].userId < 4) {
 								var linkObj = {
 									"source": (parseInt(userData[j].id) - 1),
