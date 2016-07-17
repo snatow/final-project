@@ -8,6 +8,27 @@ body {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
+circle {
+  stroke-width: 1.5px;
+}
+
+line {
+  stroke: #999;
+  stroke-width: 1.5px;
+}
+
+text {
+  pointer-events: none;
+  font: 30px sans-serif;
+}
+
+svg {
+  background-color: white;
+  margin-top: 20px;
+  margin-left: -120px;
+  border: 2px solid black;
+}
+
 a {
   color: #000080;
   text-decoration: none;
@@ -88,6 +109,10 @@ input {
 
 #about-link {
   margin-left: 13%;
+}
+
+#visualization-link {
+  margin-left: 5%;
 }
 
 #home-link {

@@ -20,6 +20,7 @@ $(document).ready(function() {
 	var $profileEditLink = $("#profile-edit-link");
 	var $newProjectLink = $("#new-project-link");
 	var $aboutLink = $("#about-link");
+	var $visualizationLink = $("#visualization-link");
 
 	// -----------------------------------------------------------------------------
 	// FUNCTIONS TO HANDLE USER EXPERIENCE FOR AUTH
@@ -34,6 +35,7 @@ $(document).ready(function() {
 	  $welcome.hide();
 	  $logoutLink.show();
 	  $profileLink.show();
+	  $visualizationLink.show();
 	  getProjectsProtected();
 	} else {
 		console.log('not logged in');
@@ -69,6 +71,7 @@ $(document).ready(function() {
 					$logoutLink.show();
 					$welcome.hide();
 					$profileLink.show();
+					$visualizationLink.show();
 					getProjectsProtected();
 					// location.reload();
 	    } else {
@@ -179,7 +182,70 @@ $(document).ready(function() {
 		}
 		renderAbout();
 	})
+	// -----------------------------------------------------------------------------
+	// FUNCTION FOR NETWORK VISUALIZATION
+	// -----------------------------------------------------------------------------
+	$visualizationLink.click(function(e) {
+		e.preventDefault();
+		$welcome.hide();
 
+		var $contain = $("#contain");
+		$contain.empty();
+
+		$.ajax({
+			url: '/users/visualization/data',
+			method: 'GET'
+		}).done(function(data) {
+			visualizationRender(data);
+		})
+	})
+
+	//This render's the D3 drawing
+var visualizationRender = function(json) {
+
+		var width = 960,
+		    height = 500
+
+		var svg = d3.select("#contain").append("svg")
+		    .attr("width", width)
+		    .attr("height", height);
+
+		var force = d3.layout.force()
+		    .gravity(0.05)
+		    .distance(400)
+		    .charge(-100)
+		    .size([width, height]);
+		    
+		force
+	      .nodes(json.nodes)
+	      .links(json.links)
+	      .start();
+
+	  var link = svg.selectAll(".link")
+	      .data(json.links)
+	    .enter().append("line")
+	      .attr("class", "link");
+
+	  var node = svg.selectAll(".node")
+	      .data(json.nodes)
+	    .enter().append("g")
+	      .attr("class", "node")
+	      .call(force.drag);
+
+	  node.append("text")
+	      .attr("dx", 12)
+	      .attr("dy", ".35em")
+	      .text(function(d) { return d.name });
+
+	  force.on("tick", function() {
+	    link.attr("x1", function(d) { return d.source.x; })
+	        .attr("y1", function(d) { return d.source.y; })
+	        .attr("x2", function(d) { return d.target.x; })
+	        .attr("y2", function(d) { return d.target.y; });
+
+	    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+	  });
+	};
 
 });
 
@@ -246,6 +312,7 @@ var renderProject = function(data) {
 	var $project = $("<div class='project-full' data-attribute='" + data.id + "'></div>");
 	var $title = $("<h3>" + data.title + "</h3>");
 	$project.append($title);
+	var $user = $("<h3>Created by: " + data.user.username + "</h3>")
 	var $image = $("<a href='" + data.url + "'><img class='full-image' src='" + data.image + "'></a>");
 	$project.append($image);
 	var $description = $("<p>Description: " + data.description + "</p></br>");
