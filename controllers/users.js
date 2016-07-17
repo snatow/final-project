@@ -116,11 +116,19 @@ router.get("/visualization/data", function(req, res) {
 				for (var k = 0; k < userData[j].projects.length; k++) {
 					for (var m = 0; m < commentData.length; m ++) {
 						if (userData[j].projects[k].id == commentData[m].projectId) {
-							var linkObj = {
-								"source": (parseInt(userData[j].id) - 1),
-								"target": (parseInt(commentData[m].userId) - 1)
+							if (commentData[m].userId < 4) {
+								var linkObj = {
+									"source": (parseInt(userData[j].id) - 1),
+									"target": (parseInt(commentData[m].userId) - 1)
+								}
+								linkArray.push(linkObj);
+							} else {
+								var linkObj = {
+									"source": (parseInt(userData[j].id) - 1),
+									"target": (parseInt(commentData[m].userId) - 2)
+								}
+								linkArray.push(linkObj);
 							}
-							linkArray.push(linkObj);
 						}
 					}
 				}
