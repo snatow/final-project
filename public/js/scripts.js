@@ -106,6 +106,7 @@ $(document).ready(function() {
 	// Event Listener and handler to logout
 	$logoutLink.click(function(e){
     Cookies.remove("jwt_token");
+    Cookies.remove("userId");
     location.reload();
 	});
 
