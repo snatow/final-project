@@ -144,6 +144,7 @@ $(document).ready(function() {
 		$profileEditLink.hide();
 		$newProjectLink.hide();
 		$profileLink.show();
+		$visualizationLink.show();
 		getProjectsProtected();
 	})
 
@@ -188,6 +189,8 @@ $(document).ready(function() {
 	$visualizationLink.click(function(e) {
 		e.preventDefault();
 		$welcome.hide();
+		$homeLink.show();
+		$visualizationLink.hide();
 
 		var $contain = $("#contain");
 		$contain.empty();
