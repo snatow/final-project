@@ -133,7 +133,7 @@ router.get("/visualization/data", function(req, res) {
 							} else if ((commentData[m].userId > 4) && (userData[j].id < 4)) {
 								var linkObj = {
 									"source": (parseInt(userData[j].id) - 1),
-									"target": (parseInt(commentData[m].userId) - 4)
+									"target": (parseInt(commentData[m].userId) - 2)
 								}
 								linkArray.push(linkObj);
 							} else if ((commentData[m].userId > 4) && (userData[j].id > 4)) {
