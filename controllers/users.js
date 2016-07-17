@@ -97,16 +97,7 @@ router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 })
 
 //DATA VISUALIZATION - GETS INFO FOR D3 
-//this needs a lot of work
 router.get("/visualization/data", function(req, res) {
-	// User.findAll({include: [Project, Comment]}).then(function(users) {
-	// 	var nodeArray = [];
-	// 	for (var i = 0; i < users.length; i++) {
-	// 		var nodeObj = {"name": users[i].username};
-	// 		nodeArray.push(nodeObj);
-	// 	}
-	// 	// res.send(nodeArray);
-	// })
 	var commentData;
 	var userData;
 	Comment.findAll({include: [User, Project]}).then(function(comments) {
@@ -115,11 +106,6 @@ router.get("/visualization/data", function(req, res) {
 		User.findAll({include: [Project, Comment]}).then(function(users) {
 			userData = users;
 		}).then(function() {
-			// var data = {
-			// 	"comments": commentData,
-			// 	"users": userData
-			// }
-			// res.send(data);
 			var nodeArray = [];
 			for (var i = 0; i < userData.length; i++) {
 				var nodeObj = {"name": userData[i].username};
@@ -207,7 +193,9 @@ router.post("/:user_id/new-project", function(req, res) {
 		url: req.body.url,
 		userId: req.params.user_id
 	}).then(function(project) {
-		res.send(project);
+		Project.findById(project.dataValues.id, {include: [User, Comment]}).then(function(project) {
+			res.send(project);
+		})
 	})
 	// res.send(newProject);
 })

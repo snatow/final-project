@@ -48,7 +48,7 @@ $(document).ready(function() {
 		$profileEditLink.hide();
 		$newProjectLink.hide();
 		getProjects();
-	}
+	};
 
 	// Event listener and handler to login
 	$loginForm.submit(function(e){
@@ -114,13 +114,13 @@ $(document).ready(function() {
 		$signupForm.hide();
 		$signupLink.hide();
 		$loginForm.show();
-	}
+	};
 
 	var redirectLogin = function() {
 		$signupForm.hide();
 		$signupLink.hide();
 		$loginForm.show();
-	}
+	};
 
 	// Event listener and handler to signup link
 	$signupLink.click(function(e) {
@@ -146,17 +146,18 @@ $(document).ready(function() {
 		$profileLink.show();
 		$visualizationLink.show();
 		getProjectsProtected();
-	})
+	});
 
 	//Event listener and handler to show the user profile
 	$profileLink.click(function(e) {
 		e.preventDefault();
 		$profileEditLink.show();
 		$newProjectLink.show();
+		$visualizationLink.hide();
 		var user_id = Cookies.get("userId");
 		// console.log(user_id);
 		getProfile(user_id);
-	})
+	});
 
 	//Event listener and handler to edit the user profile
 	$profileEditLink.click(function(e) {
@@ -164,7 +165,7 @@ $(document).ready(function() {
 		// console.log("edit profile clicked");
 		var user_id = Cookies.get("userId");
 		getProfileForEdit(user_id);
-	})
+	});
 
 	//Event listener and handler to create a new project
 	$newProjectLink.click(function(e) {
@@ -172,17 +173,18 @@ $(document).ready(function() {
 		// console.log("new project");
 		var user_id = Cookies.get("userId");
 		renderNewProject(user_id);
-	})
+	});
 
 	//Event listener and handler for the about page link
 	$aboutLink.click(function(e) {
 		e.preventDefault();
 		$welcome.hide();
+		$visualizationLink.hide();
 		if (Cookies.get("jwt_token")) {
 			$homeLink.show();
 		}
 		renderAbout();
-	})
+	});
 	// -----------------------------------------------------------------------------
 	// FUNCTION FOR NETWORK VISUALIZATION
 	// -----------------------------------------------------------------------------
@@ -201,7 +203,7 @@ $(document).ready(function() {
 		}).done(function(data) {
 			visualizationRender(data);
 		})
-	})
+	});
 
 	//This render's the D3 drawing
 var visualizationRender = function(json) {
@@ -274,8 +276,8 @@ var renderProjects = function(data) {
 		$img.attr("data-attribute", data[i].id);
 		$project.append($img);
 		$contain.append($project);
-	}
-}
+	};
+};
 
 
 // This rendering function includes the event listeners necessary to see the project show pages
@@ -296,16 +298,16 @@ var renderProjectsProtected = function(data) {
 		$img.attr("data-attribute", data[i].id);
 		$project.append($img);
 
-		// class='preview-image' src='" + data[i].image + "'
 		$project.click(function() {
 			// console.log("clicked");
 			var target = $(event.target)
+			$("#visualization-link").hide();
 			// console.log(target.attr("data-attribute"))
 			getProject(target.attr("data-attribute"));
 		})
 		$contain.append($project);
 	}
-}
+};
 
 //This rendering function is the project show page equivalent
 var renderProject = function(data) {
@@ -379,7 +381,7 @@ var renderProject = function(data) {
 
 	var $homeLink = $("#home-link");
 	$homeLink.show();
-}
+};
 
 //This renders the user's profile, which is presently just the projects they have added and their username
 //From this "view" only they can add new projects or update their profiles
@@ -412,7 +414,7 @@ var renderProfile = function(data) {
 
 	var $profileLink = $("#profile-link");
 	$profileLink.hide();
-}
+};
 
 //This renders the form to allow the user to edit his/her profile
 var renderEditProfile = function(data) {
@@ -457,7 +459,7 @@ var renderEditProfile = function(data) {
 
 	$contain.append($form);
 	profileEditFormSubmit();
-}
+};
 
 //This renders the form to allow the user to create a new project
 var renderNewProject = function(data) {
@@ -598,7 +600,7 @@ var renderCommentForm = function(user_id, project_id) {
 			renderProject(data);
 		});
 	})
-}
+};
 
 //This render's the about "page"
 var renderAbout = function() {
@@ -607,7 +609,7 @@ var renderAbout = function() {
 
 	var $about = $("<p class='about'>developer.connect() is a community forum where web developers can share projects they are working on, view projects created by others and comment on those projects. If you want to become involved, please sign up at the link above.</p>");
 	$contain.append($about);
-}
+};
 
 
 // -----------------------------------------------------------------------------
@@ -656,7 +658,7 @@ var getProject = function(project_id) {
 		// console.log("project's user id: " + data.userId);
 		renderProject(data);
 	})
-}
+};
 
 //This AJAX call will get the data to allow a user to edit a project via the edit form
 var getProjectForEdit = function(project_id) {
@@ -668,7 +670,7 @@ var getProjectForEdit = function(project_id) {
 		// console.log(data);
 		renderEditProject(data);
 	})
-}
+};
 
 //This AJAX call will get the user's profile to render their profile "view"
 var getProfile = function(user_id) {
@@ -679,7 +681,7 @@ var getProfile = function(user_id) {
 		// console.log(data);
 		renderProfile(data);
 	})
-}
+};
 
 //This AJAX call will get the user's profile data (minus password) and allow them to edit it via the edit form
 var getProfileForEdit = function(user_id) {
@@ -690,7 +692,7 @@ var getProfileForEdit = function(user_id) {
 		// console.log(data);
 		renderEditProfile(data);
 	})
-}
+};
 
 //This AJAX will allow a user to delete a comment if they wrote the comment and refresh the project show "view"
 var deleteComment = function(user_id, project_id, comment_id) {
@@ -700,7 +702,7 @@ var deleteComment = function(user_id, project_id, comment_id) {
 	}).done(function(data) {
 		renderProject(data);
 	})
-}
+};
 
 
 

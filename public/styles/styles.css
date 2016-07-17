@@ -151,7 +151,9 @@ header {
 
 .preview-image {
   max-width: 200px;
-  margin: 5px;
+  margin: 0 auto;
+  padding-bottom: 5px;
+  display: block;
   max-height: 120px;
 }
 
@@ -332,7 +334,7 @@ footer {
 
   .preview-image {
     max-width: 200px;
-    margin: 5px;
+    /*margin: 5px;*/
   }
 
   footer {
