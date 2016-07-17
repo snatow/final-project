@@ -1,6 +1,6 @@
 ![logo](https://github.com/snatow/final-project/blob/master/public/images/logo_small.png)
 
-## developer.connect()
+## developer.connect()(https://developer-connect.herokuapp.com/)
 
 Description
 
