@@ -95,7 +95,9 @@ input {
 }
 
 .project-full {
-  width: 230px
+  width: 230px;
+  background-color: white;
+  padding: 10px;
 }
 
 #login-contain {
@@ -246,9 +248,10 @@ footer {
   }
 
   .project-full {
-    /*this isn't working, and I don't know why*/
     width: 500px;
-    padding-left: 120px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 100px;
   }
 
   h2 {
