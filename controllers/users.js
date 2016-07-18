@@ -34,7 +34,7 @@ router.post('/', function(req, res) {
 // -----------------------------------------------
 // ROUTES THAT REQUIRE AUTHENTICATION w/ JWT BELOW
 // -----------------------------------------------
-// router.use(passport.authenticate('jwt', { session: false }));
+router.use(passport.authenticate('jwt', { session: false }));
 
 // TESTING
 // router.get('/', function(req, res) {
@@ -112,8 +112,6 @@ router.get("/visualization/data", function(req, res) {
 			for (var i = 0; i < userData.length; i++) {
 				var nodeObj = {"name": userData[i].username};
 				nodeArray.push(nodeObj);
-				// var nodeKey = {userData[i].userId: userData[i].username};
-				// nodeKeysArray.push(nodeKey);
 			}
 			var linkArray = [];
 			for (var j = 0; j < userData.length; j++) {
@@ -139,37 +137,6 @@ router.get("/visualization/data", function(req, res) {
 								"target": targetKey
 							}
 							linkArray.push(linkObj);
-							// var linkObj = {
-							// 	"source": (parseInt(userData[j].user) - 1),
-							// 	"target": (parseInt(commentData[m].userId) - 1)
-							// }
-							// Heroku skipped the next ID number after the seed data
-							// so I need this conditional to make sure the links work
-							// if ((commentData[m].userId < 4) && (userData[j].id < 4)) {
-							// 	var linkObj = {
-							// 		"source": (parseInt(userData[j].id) - 1),
-							// 		"target": (parseInt(commentData[m].userId) - 1)
-							// 	}
-							// 	linkArray.push(linkObj);
-							// } else if ((commentData[m].userId < 4) && (userData[j].id > 4)) {
-							// 	var linkObj = {
-							// 		"source": (parseInt(userData[j].id) - 2),
-							// 		"target": (parseInt(commentData[m].userId) - 1)
-							// 	}
-							// 	linkArray.push(linkObj);
-							// } else if ((commentData[m].userId > 4) && (userData[j].id < 4)) {
-							// 	var linkObj = {
-							// 		"source": (parseInt(userData[j].id) - 1),
-							// 		"target": (parseInt(commentData[m].userId) - 2)
-							// 	}
-							// 	linkArray.push(linkObj);
-							// } else if ((commentData[m].userId > 4) && (userData[j].id > 4)) {
-							// 	var linkObj = {
-							// 		"source": (parseInt(userData[j].id) - 2),
-							// 		"target": (parseInt(commentData[m].userId) - 2)
-							// 	}
-							// 	linkArray.push(linkObj);
-							// }
 						}
 					}
 				}
