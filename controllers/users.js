@@ -87,7 +87,7 @@ router.get("/:user_id/projects/:project_id/edit", function(req, res) {
 		// console.log(req.params.user_id);
 		if (err) {
 			console.log(err);
-		} else if (project.dataValues.userId == req.params.user_id) {
+		} else if (project.dataValues.userId === req.params.user_id) {
 			res.send(project);
 		} else {
 			console.log("you do not have the correct permissions");
