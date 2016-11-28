@@ -117,18 +117,18 @@ router.get("/visualization/data", function(req, res) {
 			for (var j = 0; j < userData.length; j++) {
 				for (var k = 0; k < userData[j].projects.length; k++) {
 					for (var m = 0; m < commentData.length; m ++) {
-						if (userData[j].projects[k].id == commentData[m].projectId) {
+						if (userData[j].projects[k].id === commentData[m].projectId) {
 							var source = userData[j].username;
 							var sourceKey;
 							for (var n = 0; n < nodeArray.length; n++) {
-								if (nodeArray[n].name == source) {
+								if (nodeArray[n].name === source) {
 									sourceKey = n;
 								}
 							}
 							var target = commentData[m].user.username;
 							var targetKey;
 							for (var a = 0; a < nodeArray.length; a++) {
-								if (nodeArray[a].name == target) {
+								if (nodeArray[a].name === target) {
 									targetKey = a;
 								}
 							}
